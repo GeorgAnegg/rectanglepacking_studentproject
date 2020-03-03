@@ -7,6 +7,8 @@ class Greedy{
 
 object Greedy{
 
-  def runGreedy = ???
+  def greedyIteration= ???
+
+  def runGreedy(instance: Instance, ordering: Ordering):Output = ???
 
 }

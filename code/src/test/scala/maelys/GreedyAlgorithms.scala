@@ -1,16 +1,18 @@
 package maelys
 
-import ch.ethz.math.ifor.rectanglePacking.{Greedy, Instance}
+import ch.ethz.math.ifor.rectanglePacking.{Greedy, Instance, NormOrdering}
 
 
 object GreedyAlgorithms extends App {
 
+  //specify an instance here
   val instance:Instance = ???
 
-  //val ordering:Ordering = ???
-  //TODO: would like to be able to specify my own ordering
+  //specify an ordering here
+  val ordering:NormOrdering = new NormOrdering(1)
 
-  //Greedy.runGreedy(instance,ordering)
+
+  Greedy.runGreedy(instance,ordering)
 
 
 }
