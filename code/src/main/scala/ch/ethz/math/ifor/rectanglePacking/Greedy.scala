@@ -1,14 +1,17 @@
 package ch.ethz.math.ifor.rectanglePacking
 
-class Greedy{
+class Greedy(instance: Instance, output: Output) extends Algorithm(instance, output) {
 
 }
 
 
-object Greedy{
+object Greedy {
 
-  def greedyIteration= ???
+  //def greedyIteration(instance: Instance, anchor:Anchor) : (instance/shape, (anchor, rectangle))
 
-  def runGreedy(instance: Instance, ordering: Ordering):Output = ???
+  def runGreedy(instance: Instance, ordering: Ordering): Output = ???
+  // TODO: adjust compare function so that we can use sortBy
+  // it should look something like
+  // instance.anchors.sortWith(ordering.compare)
 
 }
