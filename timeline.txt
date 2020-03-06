@@ -1,0 +1,5 @@
+﻿
+Mar late: some useful tests (implement TilePacking, Greedy, or Bruteforce)
+Apr early: firsts tests, adjustments
+May mid: prepare presentation and report
+May 29 presentation+report
