@@ -19,6 +19,26 @@ abstract class Point(val coordinates: Vector[Double]) {
     }
   }
 
+  /**
+    * Returns the distance to a shift point (p-norm)
+    * @param shift
+    * @param p
+    * @return
+    */
+  def normShift(shift: Point,p: Double): Double = {
+    assert(p > 0)
+    if (p == inf) {
+      (coordinates zip shift.coordinates).map(pair => pair._1 - pair._2).map(_.abs).max
+    }
+    else {
+      Math.pow((coordinates zip shift.coordinates).map(pair => pair._1 - pair._2).map(a => Math.pow(a.abs, p)).sum, 1 / p)
+    }
+  }
+
+  //def diff(pt:Point): Point = {
+   // new Point((coordinates zip pt.coordinates).map(pair => pair._1 - pair._2))
+ // }
+
 }
 
 
