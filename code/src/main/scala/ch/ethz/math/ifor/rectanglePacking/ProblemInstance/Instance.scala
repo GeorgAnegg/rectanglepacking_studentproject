@@ -17,3 +17,5 @@ class Instance (val boundaryPoints:List[BoundaryPoint], val anchors:Vector[Ancho
   def customSort(list: List[Int]): Instance = ???
 
 }
+
+//TODO: in object, have function createRandomInstance that creates (0,1) instance with random anchors (including origin)

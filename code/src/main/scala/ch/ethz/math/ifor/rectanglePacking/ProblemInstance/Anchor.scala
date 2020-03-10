@@ -18,6 +18,8 @@ object Anchor{
     (for (i<- 1 to dimension) yield math.random).toVector
   )
 
+  /** //TODO: add documentation
+     */
   def random(n: Int): List[Anchor] =
     (for (i<- 1 to n) yield Anchor.randomAnchor).toList
 }
