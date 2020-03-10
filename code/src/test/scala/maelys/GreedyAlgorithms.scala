@@ -1,6 +1,7 @@
 package maelys
 
-import ch.ethz.math.ifor.rectanglePacking.{Point, Greedy, Instance, NormOrdering}
+import ch.ethz.math.ifor.rectanglePacking.Algorithms.Greedy
+import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.Instance
 
 
 object GreedyAlgorithms extends App {
@@ -8,12 +9,12 @@ object GreedyAlgorithms extends App {
   //specify an instance here
   val instance: Instance = ???
 
-  //specify an ordering here
-  val ordering: NormOrdering = new NormOrdering(1)
-  val orderingFromOrigin: NormOrdering = new NormOrdering(1, Point.origin)
 
+  val p:Double =1
 
-  Greedy.runGreedy(instance,ordering)
+  Greedy.runGreedy(instance.normSort(p))
+  Greedy.runGreedy(instance.randomSort)
+
 
 
 }

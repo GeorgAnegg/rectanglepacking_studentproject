@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking
+package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
 class Anchor(coordinates:Vector[Double]) extends Point(coordinates) {
 

@@ -1,16 +1,18 @@
-package ch.ethz.math.ifor.rectanglePacking
+package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
+
+import ch.ethz.math.ifor.rectanglePacking.{dimension,inf}
 
 abstract class Point(val coordinates: Vector[Double]) {
-  assert(coordinates.length == dimension)
+  require(coordinates.length == dimension)
 
-  /*
-  this is a generic comment
-   */
+
   def dominates(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 < pair._2)
 
   //TODO: check if there is a built-in function for p-norms that handles inf.
+
+  //TODO: only have single function norm with shift=topright as default variable.
   def norm(p: Double) = {
-    assert(p > 0)
+    require(p > 0)
     if (p == inf) {
       coordinates.map(_.abs).max
     }
@@ -21,12 +23,9 @@ abstract class Point(val coordinates: Vector[Double]) {
 
   /**
     * Returns the distance to a shift point (p-norm)
-    * @param shift
-    * @param p
-    * @return
     */
-  def normShift(shift: Point,p: Double): Double = {
-    assert(p > 0)
+  def normShift(p: Double, shift: Point): Double = {
+    require(p > 0)
     if (p == inf) {
       (coordinates zip shift.coordinates).map(pair => pair._1 - pair._2).map(_.abs).max
     }
@@ -35,14 +34,17 @@ abstract class Point(val coordinates: Vector[Double]) {
     }
   }
 
-  //def diff(pt:Point): Point = {
-   // new Point((coordinates zip pt.coordinates).map(pair => pair._1 - pair._2))
- // }
-
 }
 
 
 object Point {
+
+
+  def compare(p:Double, shift:Point): (Point,Point)=>Boolean = {
+   (point1: Point, point2: Point)=>
+    point1.normShift(p,shift)<point2.normShift(p,shift)
+  }
+
 
   /** origin and topright are the points (0,0) and (1,1) wrt. the original square instance
     * warning: origin and topright are hard-coded points and do not refer to an instance
