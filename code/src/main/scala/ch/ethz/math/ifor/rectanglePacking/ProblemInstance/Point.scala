@@ -2,7 +2,7 @@ package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.{dimension,inf}
 
-abstract class Point(val coordinates: Vector[Double]) {
+abstract case class Point(coordinates: Vector[Double]) {
   require(coordinates.length == dimension)
 
 
