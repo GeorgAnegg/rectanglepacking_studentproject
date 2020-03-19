@@ -5,6 +5,10 @@ import ch.ethz.math.ifor.rectanglePacking.{dimension, inf}
 class Point(val coordinates: Vector[Double]) {
   require(coordinates.length == dimension)
 
+  def this(coords: (Double, Double)){
+    this(Vector(coords._1,coords._2))
+  }
+
   /** point.subtract(shift) computes point-shift
     *
     * @param point

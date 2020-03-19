@@ -1,7 +1,9 @@
 package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
+import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegmentList
 
-class Instance (val boundaryPoints:List[BoundaryPoint], val anchors:Vector[Anchor]) {
+
+class Instance (val boundaryPoints:BoundarySegmentList, val anchors:List[Anchor]) {
 
   def normSort(p:Double, shift:Point=Point.topright): Instance= new Instance(boundaryPoints, anchors.sortWith(Point.compare(p, shift)))
 
@@ -18,7 +20,8 @@ class Instance (val boundaryPoints:List[BoundaryPoint], val anchors:Vector[Ancho
 
 }
 object Instance {
-  def createRandomInstance(boundaryPoints : List[BoundaryPoint],n:Int) ={
-    new Instance(boundaryPoints,(Anchor.random(n-1) :+ new Anchor(Point.origin.coordinates)).toVector)
+
+  def createRandomUnitSquareInstance(n:Int) ={
+    new Instance(BoundarySegmentList.unitSquareBoundary, Anchor.random(n-1) :+ Anchor.pointToAnchor(Point.origin))
   }
 }

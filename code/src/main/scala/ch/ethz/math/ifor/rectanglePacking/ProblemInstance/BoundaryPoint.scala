@@ -7,5 +7,9 @@ case class BoundaryPoint(override val coordinates:Vector[Double]) extends Point(
 object BoundaryPoint {
 
   /** transforms a Point into a BoundaryPoint */
-  def toBoundaryPoint(p: Point): BoundaryPoint = BoundaryPoint(p.coordinates)
+  def pointToBoundaryPoint(p: Point): BoundaryPoint = BoundaryPoint(p.coordinates)
+
+
+
+
 }

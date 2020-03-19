@@ -12,7 +12,7 @@ case class Anchor(override val coordinates:Vector[Double]) extends Point(coordin
 }
 object Anchor{
   /** transforms a Point into an Anchor */
-  def toAnchor(p: Point): Anchor = Anchor(p.coordinates)
+  def pointToAnchor(p: Point): Anchor = Anchor(p.coordinates)
 
 
   /** create a random Anchor in the right dimension (draw from [0,1]x[0,1] uniformly at random)
