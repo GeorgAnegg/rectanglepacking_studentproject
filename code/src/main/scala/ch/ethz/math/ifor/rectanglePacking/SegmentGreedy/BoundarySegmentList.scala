@@ -18,7 +18,7 @@ class BoundarySegmentList(val boundarySegmentList: Array[List[BoundarySegment]])
     * @param rectangle
     */
   def update(rectangle: Rectangle): Unit = {
-    require(rectangle.anchorOrigin.dominates(rectangle.anchorTopRight))
+    require(rectangle.originCorner.dominatesStrict(rectangle.topRightCorner))
     for (i <- 0 until dimension) {
       boundarySegmentList(i) = boundarySegmentList(i) :+ rectangle.lowBoundary(i)
     }

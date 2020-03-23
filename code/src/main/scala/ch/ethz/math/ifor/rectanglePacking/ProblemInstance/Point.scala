@@ -5,9 +5,9 @@ import ch.ethz.math.ifor.rectanglePacking.{dimension, inf}
 class Point(val coordinates: Vector[Double]) {
   require(coordinates.length == dimension)
 
-  def this(coords: (Double, Double)){
-    this(Vector(coords._1,coords._2))
-  }
+  //def this(coords: (Double, Double)){
+  //  this(Vector(coords._1,coords._2))
+  //}
 
   /** point.subtract(shift) computes point-shift
     *
@@ -16,8 +16,8 @@ class Point(val coordinates: Vector[Double]) {
     */
   def subtract (point: Point): Point = new Point( (coordinates,point.coordinates).zipped.map(_-_))
 
-  def dominates(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 < pair._2)
-
+  def dominatesLoose(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 <= pair._2)
+  def dominatesStrict(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 < pair._2)
 
   /** Computes the distance to the shift point in the p-norm
     *
@@ -51,7 +51,7 @@ object Point {
   /** origin and topright are the points (0,0) and (1,1) wrt. the original square instance
     * warning: origin and topright are hard-coded points and do not refer to a general instance or dimension
     */
-  val origin: BoundaryPoint = BoundaryPoint(Vector(0, 0))
-  val topright: BoundaryPoint = BoundaryPoint(Vector(1, 1))
+  val origin: Point = new Point(Vector.fill(dimension)(0))
+  val topright: Point = new Point(Vector.fill(dimension)(1))
 
 }
