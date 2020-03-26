@@ -47,7 +47,7 @@ class Rectangle(val originCorner : Point, val topRightCorner: Point ) {
     * @param pt
     * @return
     */
-  def contains(pt:Point): Boolean={
+  def contained(pt:Point): Boolean={
     originCorner.coordinates!=Point.origin.coordinates && Point.origin.dominatesLoose(originCorner) && topRightCorner.dominatesLoose(pt)
   }
 }

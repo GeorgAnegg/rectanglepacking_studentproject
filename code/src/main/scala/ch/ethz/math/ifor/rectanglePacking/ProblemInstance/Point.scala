@@ -1,6 +1,6 @@
 package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
-import ch.ethz.math.ifor.rectanglePacking.{dimension, inf}
+import ch.ethz.math.ifor.rectanglePacking.{Rectangle, dimension, inf}
 
 class Point(val coordinates: Vector[Double]) {
   require(coordinates.length == dimension)
@@ -34,6 +34,33 @@ class Point(val coordinates: Vector[Double]) {
     else {
       Math.pow(subtract(shift).coordinates.map(a => Math.pow(a.abs, p)).sum, 1 / p)
     }
+  }
+
+  /** Returns true if the point is in the rectangle (boundaries included)
+    *
+    * @param r
+    * @return
+    */
+  def inRectLoose(r:Rectangle):Boolean = {
+    r.originCorner.dominatesLoose(this) && this.dominatesLoose(r.topRightCorner)
+  }
+
+  /** Returns true if the point is inside the rectangle (boundaries excluded)
+    *
+    * @param r
+    * @return
+    */
+  def inRectStrict(r:Rectangle): Boolean = {
+    r.originCorner.dominatesStrict((this)) && this.dominatesStrict(r.topRightCorner)
+  }
+
+  /** Returns true if the point is in the rectangle (upper boundaries excluded)
+    *
+    * @param r
+    * @return
+    */
+  def inRectStrictUP(r:Rectangle): Boolean = {
+    r.originCorner.dominatesLoose(this) && this.dominatesStrict(r.topRightCorner)
   }
 
 }
