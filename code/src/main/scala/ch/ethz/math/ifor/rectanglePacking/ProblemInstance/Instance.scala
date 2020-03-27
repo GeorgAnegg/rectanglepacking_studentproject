@@ -1,13 +1,29 @@
 package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
+import ch.ethz.math.ifor.rectanglePacking.{Rectangle, cross, dimension, inf}
 import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegmentList
 
+class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], val anchors:List[Anchor]) {
+  //require(anchors.contains(Point.origin))
+  require(forbiddenRectangles.forall(r=>r.volume>0))
 
-class Instance (val boundaryPoints:BoundarySegmentList, val anchors:List[Anchor]) {
 
-  def normSort(p:Double, shift:Point=Point.topright): Instance= new Instance(boundaryPoints, anchors.sortWith(Point.compare(p, shift)))
+  def pointIn(anchor: Anchor): Boolean = {
+    anchor.inRectLoose(new Rectangle(Point.origin,topRightBox)) && forbiddenRectangles.forall(r => !(anchor.inRectStrictUP(r)))
+  }
+  require(anchors.forall(a=>this.pointIn(a)))
 
 
+  /** Creates list of possible top right corners
+    *
+    * @return
+    */
+  def tops():List[Point] ={
+    (cross.crossJoin[Double]((0 until dimension).map(j=>((anchors.map(a=>a.coordinates(j))++List(topRightBox.coordinates(j))++forbiddenRectangles.map(r=>r.originCorner.coordinates(j))++forbiddenRectangles.map(r=>r.topRightCorner.coordinates(j)))).distinct).toList)).map(l=>new Point(l.toVector)).distinct
+  }
+
+
+  def normSort(p:Double, shift:Point=Point.topright): Instance= new Instance(topRightBox,forbiddenRectangles, anchors.sortWith(Point.compare(p, shift)))
 
   def randomSort: Instance = ???
 
@@ -20,8 +36,8 @@ class Instance (val boundaryPoints:BoundarySegmentList, val anchors:List[Anchor]
 
 }
 object Instance {
-
+//TODO: Create random Unit Square intance
   def createRandomUnitSquareInstance(n:Int) ={
-    new Instance(BoundarySegmentList.unitSquareBoundary, Anchor.random(n-1) :+ Anchor.pointToAnchor(Point.origin))
+
   }
 }

@@ -12,8 +12,8 @@ object GreedyAlgorithms extends App {
 
   val p:Double =1
 
-  Greedy.runGreedy(instance.normSort(p))
-  Greedy.runGreedy(instance.randomSort)
+  //Greedy.runGreedy(instance.normSort(p))
+  //Greedy.runGreedy(instance.randomSort)
 
 
 
