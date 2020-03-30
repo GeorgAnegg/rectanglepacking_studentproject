@@ -20,5 +20,10 @@ object VecTest extends App {
 
   //val plot = Plot().withScatter(xs, ys)
 
-  draw(plot, "my-first-plot")
+  draw(plot, "VecTest")
 }
+
+/* Note:
+  it takes 10 sec for both 100 or 1000 rectangles but plotly can't open the 1000 rectangles (it doesn't show anything)
+  plotly shows graph for 800 rectangles
+ */
