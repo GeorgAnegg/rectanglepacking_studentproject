@@ -5,14 +5,12 @@ import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegmentList
 
 class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], val anchors:List[Anchor]) {
   //require(anchors.contains(Point.origin))
-  require(forbiddenRectangles.forall(r=>r.volume>0))
-
+  require(forbiddenRectangles.forall(r=>r.volume>=0))
 
   def pointIn(anchor: Anchor): Boolean = {
     anchor.inRectLoose(new Rectangle(Point.origin,topRightBox)) && forbiddenRectangles.forall(r => !(anchor.inRectStrictUP(r)))
   }
   require(anchors.forall(a=>this.pointIn(a)))
-
 
   /** Creates list of possible top right corners
     *
@@ -21,8 +19,7 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
   def tops():List[Point] ={
     (cross.crossJoin[Double]((0 until dimension).map(j=>((anchors.map(a=>a.coordinates(j))++List(topRightBox.coordinates(j))++forbiddenRectangles.map(r=>r.originCorner.coordinates(j))++forbiddenRectangles.map(r=>r.topRightCorner.coordinates(j)))).distinct).toList)).map(l=>new Point(l.toVector)).distinct
   }
-
-
+  
   def normSort(p:Double, shift:Point=Point.topright): Instance= new Instance(topRightBox,forbiddenRectangles, anchors.sortWith(Point.compare(p, shift)))
 
   def randomSort: Instance = ???
@@ -36,8 +33,7 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
 
 }
 object Instance {
+  def standardSquare(anchors: List[Anchor]): Instance = new Instance(Point.topright, List(Rectangle(new Point(Vector(0,1)),Point.topright),Rectangle(new Point(Vector(1,0)),Point.topright)),anchors)
 //TODO: Create random Unit Square intance
-  def createRandomUnitSquareInstance(n:Int) ={
-
-  }
+  def createRandomUnitSquareInstance(n:Int): Instance = standardSquare(Anchor.origin::Anchor.random(n-1))
 }
