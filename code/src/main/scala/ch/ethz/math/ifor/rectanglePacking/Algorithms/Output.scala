@@ -41,7 +41,7 @@ class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
   def objectiveValue: Double = {
     var finalValue: Double = 0
     rectangles foreach {
-      case (anc, rec) =>
+      case (_, rec) =>
         val x_left: Double = rec.originCorner.coordinates(0)
         val x_right: Double = rec.topRightCorner.coordinates(0)
         val y_bottom: Double = rec.originCorner.coordinates(1)
