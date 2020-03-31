@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
     libraryDependencies += scalaTest % Test,
     libraryDependencies += poi,
     libraryDependencies += poiOoxml,
+    libraryDependencies += plotlyRender,
 
     //see https://plot.ly/scala/getting-started/
     // need to create file ~/.plotly/.credentials with content
