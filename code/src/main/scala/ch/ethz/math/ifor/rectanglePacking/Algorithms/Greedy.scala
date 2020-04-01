@@ -31,13 +31,13 @@ object Greedy extends Algorithm {
   // in here we'll use val currentAnchor :: newAnchors = boundedInstance.anchors (this removes the first element)
   // the anchors of the new instance will be newAnchors
 
-  def runInt(instance: Instance,possibleTops: List[Point]):Output = {
+  def auxiliaryRun(instance: Instance, possibleTops: List[Point]):Output = {
     if (instance.anchors.length>1) {
       greedyIteration(instance,possibleTops)
       // pick rectangle for first anchor in instance
       val (newInstance, rectangle) = greedyIteration(instance,possibleTops)
       // recurse. run greedy on remaining Instance
-      val internalOutput:Output = Greedy.runInt(newInstance,possibleTops)
+      val internalOutput:Output = Greedy.auxiliaryRun(newInstance,possibleTops)
       // the rectangles picked in the remaining instance
       val rectanglesMap = internalOutput.rectangles
       // put the rectangles from the remaining instance together with the current one
@@ -52,7 +52,7 @@ object Greedy extends Algorithm {
   def run(instance: Instance):Output={
     require(instance.forbiddenRectangles.forall(r=>r.contained(instance.topRightBox)))
     val possibleTops=instance.tops()
-    runInt(instance,possibleTops)
+    auxiliaryRun(instance,possibleTops)
   }
 
 /*  def run(instance: Instance): Output = {
