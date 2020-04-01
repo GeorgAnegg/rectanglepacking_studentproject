@@ -3,7 +3,7 @@ package ch.ethz.math.ifor.rectanglePacking
 import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Point}
 import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegment
 
-class Rectangle(val originCorner : Point, val topRightCorner: Point ) {
+case class Rectangle(originCorner : Point, topRightCorner: Point ) {
 
   /**
     * For a rectangle in dimension "dimension", returns the low boundary corresponding to the hyperplane on dimension i
