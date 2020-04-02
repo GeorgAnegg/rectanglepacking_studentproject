@@ -7,10 +7,12 @@ import ch.ethz.math.ifor.rectanglePacking.Rectangle
 
 class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
 
+  val uuid: String = java.util.UUID.randomUUID.toString
+
   //to make sure that the Map rectangles uses the anchors of the instance
   assert(rectangles.keySet == instance.anchors.toSet)
 
-  def showRectangles: Unit= {
+  def showRectangles(nameAlg: String): Unit= {
     val r0: Vector[Vector[Double]] = Vector(Vector(0,0,1,1,0), Vector(0,1,1,0,0))
 
     var r: Vector[Vector[Vector[Double]]] = Vector()
@@ -31,7 +33,7 @@ class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
     }
 
     plotRectangle.plot(
-      "outputFiles/prova.html",
+      path="outputFiles/test/"+nameAlg+ uuid +".html",
       Layout(
         title = "Rectangle Packing",
         showlegend = false,
