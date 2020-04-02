@@ -24,6 +24,10 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
 
   def randomSort: Instance = ???
 
+  def tilePackingSorted():Boolean={
+    anchors.sliding(2).forall(p => (p.size==1) || !(p(0).dominatesLoose(p(1))))
+  }
+
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering
     *
     * @param list
