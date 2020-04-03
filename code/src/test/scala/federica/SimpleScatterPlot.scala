@@ -1,3 +1,4 @@
+/*
 package federica
 
 import co.theasi.plotly.{Plot, draw, writer}
@@ -11,3 +12,5 @@ object SimpleScatterPlot extends App {
   val p = Plot().withScatter(xs, ys)
   draw(p, "basic-scatter", writer.FileOptions(overwrite=true))
 }
+
+ */

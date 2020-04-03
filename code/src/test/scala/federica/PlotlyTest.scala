@@ -1,3 +1,5 @@
+/*
+
 package federica
 
 import co.theasi.plotly.{Plot,draw}
@@ -11,3 +13,5 @@ object PlotlyTest extends App {
 
   draw(plot, "my-first-plot")
 }
+
+ */

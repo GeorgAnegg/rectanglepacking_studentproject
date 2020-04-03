@@ -1,3 +1,5 @@
+/*
+
 package federica
 
 import co.theasi.plotly.{Plot,draw}
@@ -27,3 +29,5 @@ object VecTest extends App {
   it takes 10 sec for both 100 or 1000 rectangles but plotly can't open the 1000 rectangles (it doesn't show anything)
   plotly shows graph for 800 rectangles
  */
+
+*/
