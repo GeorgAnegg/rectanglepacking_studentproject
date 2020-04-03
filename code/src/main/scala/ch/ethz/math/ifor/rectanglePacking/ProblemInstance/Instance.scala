@@ -2,6 +2,7 @@ package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.{Rectangle, cross, dimension, inf}
 import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegmentList
+import scala.util.Random
 
 class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], val anchors:List[Anchor]) {
   //require(anchors.contains(Point.origin))
@@ -22,7 +23,7 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
   
   def normSort(p:Double, shift:Point=Point.topright): Instance= new Instance(topRightBox,forbiddenRectangles, anchors.sortWith(Point.compare(p, shift)))
 
-  def randomSort: Instance = ???
+  def randomSort: Instance = new Instance(topRightBox,forbiddenRectangles,Random.shuffle(anchors))
 
   /** Checks if ordering given in instance is correct for tilepacking
     * A point cannot be treated after another point which he dominates
@@ -40,6 +41,8 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
   def customSort(list: List[Int]): Instance = ???
 
 }
+
+//TODO : Why these rectangles?
 object Instance {
   def standardSquare(anchors: List[Anchor]): Instance = new Instance(Point.topright, List(Rectangle(new Point(Vector(0,1)),Point.topright),Rectangle(new Point(Vector(1,0)),Point.topright)),anchors)
 //TODO: Create random Unit Square intance
