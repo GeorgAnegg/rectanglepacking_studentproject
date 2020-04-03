@@ -13,8 +13,8 @@ object SpreadsheetWithPictures extends App {
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     val outputGreedy1 = Greedy.run(instance.normSort(1))
     val outputGreedyInf = Greedy.run(instance.normSort(inf))
-    outputGreedy1.showRectangles("Greedy1")
-    outputGreedyInf.showRectangles("Greedyinf")
+    outputGreedy1.writeHtmlFile("Greedy1")
+    outputGreedyInf.writeHtmlFile("Greedyinf")
     Vector(
       instance.anchors.toString,
       outputGreedy1.objectiveValue.toString,
@@ -28,8 +28,8 @@ object SpreadsheetWithPictures extends App {
     //val instance2 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin),Anchor(Vector(0.3,0.8)),Anchor(Vector(0.8,0.3))))
     //val instances: Vector[Instance] = Vector(instance1,instance2) //construct vectorOfInstances. we should have that function in the class Instance
 
-    val numberOfAnchors = 20
-    val numberOfInstances = 8
+    val numberOfAnchors = 3
+    val numberOfInstances = 2
     val instances: Vector[Instance] = (for (i<- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
 
     val data: Vector[Vector[String]] = instances.map(runAllAlgorithms) //this gives a Vector of Vector[String] that can be filled into the spreadsheet
