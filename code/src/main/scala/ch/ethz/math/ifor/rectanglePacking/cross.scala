@@ -1,8 +1,8 @@
 package ch.ethz.math.ifor.rectanglePacking
 
-object cross extends App{
+object cross {
   /** Computes the cartesian product to produce possibleTops
-    *
+    * this will take as input a list of anchors and rectangles and compute all possible intersection points
     * @param list
     * @tparam T
     * @return

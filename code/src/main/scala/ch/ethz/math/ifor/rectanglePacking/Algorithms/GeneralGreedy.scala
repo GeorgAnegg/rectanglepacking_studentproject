@@ -14,13 +14,13 @@ object GeneralGreedy {
     */
   def anchorIt(intAnchor:Anchor,instance:Instance,possibleTops:List[Point]): Rectangle = {
     if (possibleTops.isEmpty) {
-      new Rectangle(intAnchor,intAnchor)
+      Rectangle(intAnchor,intAnchor)
     }
     else {
       val rectIt=anchorIt(intAnchor,instance,possibleTops.tail)
       val pHead=possibleTops.head
-      if(intAnchor.dominatesStrict(pHead) && instance.anchors.forall(a=> !(a.inRectStrictUP(new Rectangle(intAnchor,pHead)))) && instance.forbiddenRectangles.forall(r=> !(r.intersects(new Rectangle(intAnchor,pHead)))) && new Rectangle(intAnchor,pHead).volume>rectIt.volume) {
-        new Rectangle(intAnchor, pHead)
+      if(intAnchor.dominatesStrict(pHead) && instance.anchors.forall(a=> !(a.inRectStrictUP(Rectangle(intAnchor,pHead)))) && instance.forbiddenRectangles.forall(r=> !(r.intersects(Rectangle(intAnchor,pHead)))) && Rectangle(intAnchor,pHead).volume>rectIt.volume) {
+        Rectangle(intAnchor, pHead)
       }
       else{
         rectIt
@@ -38,7 +38,7 @@ object GeneralGreedy {
   def greedyIteration(instance: Instance,possibleTops:List[Point],tilePacking: Boolean): (Instance,Rectangle) = {
     val rectIt=anchorIt(instance.anchors.head,new Instance(instance.topRightBox,instance.forbiddenRectangles,instance.anchors.tail),possibleTops)
     if (tilePacking) {
-      val forbiddenRect=new Rectangle(rectIt.originCorner,instance.topRightBox)
+      val forbiddenRect= Rectangle(rectIt.originCorner,instance.topRightBox)
       (new Instance(instance.topRightBox,forbiddenRect.updateRectanglesTilePacking(instance.forbiddenRectangles),instance.anchors.tail),rectIt)
     }
     else{
