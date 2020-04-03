@@ -11,7 +11,7 @@ case class Rectangle(originCorner : Point, topRightCorner: Point ) {
     * @return
     */
   def lowBoundary(i : Int): BoundarySegment = {
-    require (i>=0 && i< dimension)
+    require (i>=0 && i< dimension,"Correct dimension")
 
     //val boundaryCoordinate = (0 until dimension).filterNot(i==_).map(j=>(anchorOrigin.coordinates(j),anchorTopRight.coordinates(j)))
     var boundaryCoordinates: Vector[Double] = Vector.empty[Double]

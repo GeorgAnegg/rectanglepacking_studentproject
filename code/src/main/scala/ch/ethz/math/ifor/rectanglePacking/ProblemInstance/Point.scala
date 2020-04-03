@@ -3,7 +3,7 @@ package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
 import ch.ethz.math.ifor.rectanglePacking.{Rectangle, dimension, inf}
 
 class Point(val coordinates: Vector[Double]) {
-  require(coordinates.length == dimension)
+  require(coordinates.length == dimension,"Wrong number of coordinates in a point")
 
   //def this(coords: (Double, Double)){
   //  this(Vector(coords._1,coords._2))
@@ -16,7 +16,18 @@ class Point(val coordinates: Vector[Double]) {
     */
   def subtract (point: Point): Point = new Point( (coordinates,point.coordinates).zipped.map(_-_))
 
+  /** True if the argument dominates loose the point (coordinates >=)
+    *
+    * @param point
+    * @return
+    */
   def dominatesLoose(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 <= pair._2)
+
+  /** True if the argument dominates strictly the point (coordinates >)
+    *
+    * @param point
+    * @return
+    */
   def dominatesStrict(point: Point): Boolean = (coordinates zip point.coordinates).forall(pair => pair._1 < pair._2)
 
   /** Computes the distance to the shift point in the p-norm
@@ -27,7 +38,7 @@ class Point(val coordinates: Vector[Double]) {
     */
 
   def normS(p: Double, shift: Point = Point.topright): Double = {
-    require(p > 0)
+    require(p > 0,"Wrong p for the norm")
     if (p == inf) {
       subtract(shift).coordinates.map(_.abs).max
     }
@@ -68,7 +79,12 @@ class Point(val coordinates: Vector[Double]) {
 
 object Point {
 
-
+  /** Compares distance between two points to the shift with p-norm
+    *
+    * @param p
+    * @param shift
+    * @return
+    */
   def compare(p: Double, shift: Point): (Point, Point) => Boolean = {
     (point1: Point, point2: Point) =>
       point1.normS(p, shift) < point2.normS(p, shift)

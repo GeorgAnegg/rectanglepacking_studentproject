@@ -6,12 +6,17 @@ import scala.util.Random
 
 class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], val anchors:List[Anchor]) {
   //require(anchors.contains(Point.origin))
-  require(forbiddenRectangles.forall(r=>r.volume>=0))
+  require(forbiddenRectangles.forall(r=>r.volume>=0),"Forbidden rectangle with negative volume")
 
+  /**Checks if anchor is in the right region (in the box + not in forbidden rectangles)
+    * for initialization of the algorithms, not used through iterations
+    * @param anchor
+    * @return
+    */
   def pointIn(anchor: Anchor): Boolean = {
-    anchor.inRectLoose(new Rectangle(Point.origin,topRightBox)) && forbiddenRectangles.forall(r => !(anchor.inRectStrictUP(r)))
+    anchor.inRectLoose(new Rectangle(Point.origin,topRightBox)) && forbiddenRectangles.forall(r => !(anchor.inRectStrict(r)))
   }
-  require(anchors.forall(a=>this.pointIn(a)))
+  require(anchors.forall(a=>this.pointIn(a)),"There is an anchor in the wrong region (out of the box or in a forbidden rectangle)")
 
   /** Creates list of possible top right corners
     *
@@ -30,7 +35,7 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
     * @return
     */
   def tilePackingSorted():Boolean={
-    anchors.sliding(2).forall(p => (p.size==1) || !(p(0).dominatesLoose(p(1))))
+    anchors.combinations(2).toList.forall(p => !(p(0).dominatesLoose(p(1))))
   }
 
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering
@@ -42,7 +47,7 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
 
 }
 
-//TODO : Why these rectangles?
+
 object Instance {
   def standardSquare(anchors: List[Anchor]): Instance = new Instance(Point.topright, List(Rectangle(new Point(Vector(0,1)),Point.topright),Rectangle(new Point(Vector(1,0)),Point.topright)),anchors)
 //TODO: Create random Unit Square intance

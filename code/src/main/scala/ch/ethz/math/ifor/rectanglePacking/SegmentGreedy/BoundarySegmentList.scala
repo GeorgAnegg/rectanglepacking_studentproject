@@ -10,7 +10,7 @@ import ch.ethz.math.ifor.rectanglePacking.{Rectangle, dimension}
   * @param boundarySegmentList
   */
 class BoundarySegmentList(val boundarySegmentList: Array[List[BoundarySegment]]) {
-  require(boundarySegmentList.length == dimension)
+  require(boundarySegmentList.length == dimension,"Wrong number of dimensions for boundary segment list")
 
 
   /** adds low boundaries of the segment to the list of boundaries
@@ -18,7 +18,7 @@ class BoundarySegmentList(val boundarySegmentList: Array[List[BoundarySegment]])
     * @param rectangle
     */
   def update(rectangle: Rectangle): Unit = {
-    require(rectangle.originCorner.dominatesStrict(rectangle.topRightCorner))
+    require(rectangle.originCorner.dominatesStrict(rectangle.topRightCorner),"Rectangle volume 0")
     for (i <- 0 until dimension) {
       boundarySegmentList(i) = boundarySegmentList(i) :+ rectangle.lowBoundary(i)
     }

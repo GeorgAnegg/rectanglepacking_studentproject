@@ -5,6 +5,13 @@ import ch.ethz.math.ifor.rectanglePacking.Rectangle
 
 object GeneralGreedy {
 
+  /** Looks for maximal rectangle for a given anchor
+    *
+    * @param intAnchor
+    * @param instance
+    * @param possibleTops
+    * @return
+    */
   def anchorIt(intAnchor:Anchor,instance:Instance,possibleTops:List[Point]): Rectangle = {
     if (possibleTops.isEmpty) {
       new Rectangle(intAnchor,intAnchor)
@@ -21,7 +28,13 @@ object GeneralGreedy {
     }
   }
 
-
+  /** Iteration for greedy algorithm
+    *
+    * @param instance
+    * @param possibleTops
+    * @param tilePacking
+    * @return
+    */
   def greedyIteration(instance: Instance,possibleTops:List[Point],tilePacking: Boolean): (Instance,Rectangle) = {
     val rectIt=anchorIt(instance.anchors.head,new Instance(instance.topRightBox,instance.forbiddenRectangles,instance.anchors.tail),possibleTops)
     if (tilePacking) {
@@ -36,7 +49,13 @@ object GeneralGreedy {
 
   // in here we'll use val currentAnchor :: newAnchors = boundedInstance.anchors (this removes the first element)
   // the anchors of the new instance will be newAnchors
-
+  /** Auxiliary function for greedy algorithm to do the recursion
+    *
+    * @param instance
+    * @param possibleTops
+    * @param tilePacking
+    * @return
+    */
   def auxiliaryRun(instance: Instance, possibleTops: List[Point],tilePacking: Boolean):Output = {
     if (instance.anchors.length>1) {
       greedyIteration(instance,possibleTops,tilePacking)

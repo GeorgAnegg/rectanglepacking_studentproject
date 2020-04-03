@@ -4,9 +4,13 @@ import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.Instance
 
 
 object Greedy extends Algorithm {
-
+  /** Runs greedy algorithm
+    *
+    * @param instance
+    * @return
+    */
   def run(instance: Instance):Output={
-    require(instance.forbiddenRectangles.forall(r=>r.contained(instance.topRightBox)))
+    require(instance.forbiddenRectangles.forall(r=>r.contained(instance.topRightBox)),"Forbidden rectangles not in the box")
     val possibleTops=instance.tops()
     GeneralGreedy.auxiliaryRun(instance,possibleTops,tilePacking = false)
   }
