@@ -11,11 +11,11 @@ object HelloRectanglePacking extends App {
   print(inst.anchors)
   val inst2= new Instance(inst.topRightBox,inst.forbiddenRectangles,inst.anchors.tail.tail)
   val res=Greedy.run(inst).rectangles
-  val res2=TilePacking.run(inst).rectangles
+  val res2=TilePacking.run(inst)
   println("Greedy")
   println(res.map(r=>(r._2.originCorner.coordinates,r._2.topRightCorner.coordinates)))
   println("Tilepacking")
-  println(res2.map(r=>(r._2.originCorner.coordinates,r._2.topRightCorner.coordinates)))
+  println(res2.rectangles.map(r=>(r._2.originCorner.coordinates,r._2.topRightCorner.coordinates)))
 
   //println(testI.topRightBox.coordinates)
   //println(testI.anchors.map(a=>a.coordinates))

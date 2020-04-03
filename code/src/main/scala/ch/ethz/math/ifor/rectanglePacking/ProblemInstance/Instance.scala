@@ -24,6 +24,10 @@ class Instance (val topRightBox:Point, val forbiddenRectangles:List[Rectangle], 
 
   def randomSort: Instance = ???
 
+  /** Checks if ordering given in instance is correct for tilepacking
+    * A point cannot be treated after another point which he dominates
+    * @return
+    */
   def tilePackingSorted():Boolean={
     anchors.sliding(2).forall(p => (p.size==1) || !(p(0).dominatesLoose(p(1))))
   }

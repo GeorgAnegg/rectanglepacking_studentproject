@@ -26,7 +26,7 @@ object GeneralGreedy {
     val rectIt=anchorIt(instance.anchors.head,new Instance(instance.topRightBox,instance.forbiddenRectangles,instance.anchors.tail),possibleTops)
     if (tilePacking) {
       val forbiddenRect=new Rectangle(rectIt.originCorner,instance.topRightBox)
-      (new Instance(instance.topRightBox,forbiddenRect::instance.forbiddenRectangles,instance.anchors.tail),rectIt)
+      (new Instance(instance.topRightBox,forbiddenRect.updateRectanglesTilePacking(instance.forbiddenRectangles),instance.anchors.tail),rectIt)
     }
     else{
       (new Instance(instance.topRightBox,rectIt::instance.forbiddenRectangles,instance.anchors.tail),rectIt)

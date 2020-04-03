@@ -50,4 +50,23 @@ case class Rectangle(originCorner : Point, topRightCorner: Point ) {
   def contained(pt:Point): Boolean={
     originCorner.coordinates!=Point.origin.coordinates && Point.origin.dominatesLoose(originCorner) && topRightCorner.dominatesLoose(pt)
   }
+
+  /** Updates list of forbidden Rectangles for tilepacking
+    * 
+    * @param forbidRect
+    * @return
+    */
+  def updateRectanglesTilePacking(forbidRect : List[Rectangle]): List[Rectangle] = {
+  if (forbidRect.length == 0) {
+    List(this)
+  }
+  else {
+    if (originCorner.dominatesLoose(forbidRect.head.originCorner)) {
+      this.updateRectanglesTilePacking(forbidRect.tail)
+  }
+    else {
+      forbidRect.head +: this.updateRectanglesTilePacking(forbidRect.tail)
+    }
+    }
+  }
 }
