@@ -1,22 +1,27 @@
 package ch.ethz.math.ifor.rectanglePacking.Algorithms
 
-//import co.theasi.plotly.{Plot,draw}
 import plotly._, element.Fill, layout._, Plotly._
 import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Instance}
 import ch.ethz.math.ifor.rectanglePacking.Rectangle
 
-class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
+import java.io.File
 
-  val uuid: String = java.util.UUID.randomUUID.toString
-
+class Output(val instance: Instance, val rectangles: Map[Anchor, Rectangle]) {
   //to make sure that the Map rectangles uses the anchors of the instance
   assert(rectangles.keySet == instance.anchors.toSet)
 
-  def showRectangles(nameAlg: String): Unit= {
-    val r0: Vector[Vector[Double]] = Vector(Vector(0,0,1,1,0), Vector(0,1,1,0,0))
+  val uuid: String = java.util.UUID.randomUUID.toString
+
+
+  // This is the value of the volumes of rectangles
+  def objectiveValue: Double = rectangles.values.map(_.volume).sum
+
+
+  def writeHtmlFile(nameAlg: String, show: Boolean = false): Unit = {
+    val r0: Vector[Vector[Double]] = Vector(Vector(0, 0, 1, 1, 0), Vector(0, 1, 1, 0, 0))
 
     var r: Vector[Vector[Vector[Double]]] = Vector()
-    rectangles foreach {
+    rectangles.foreach {
       case (_, rec) =>
         val x_left: Double = rec.originCorner.coordinates(0)
         val x_right: Double = rec.topRightCorner.coordinates(0)
@@ -24,23 +29,32 @@ class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
         val y_top: Double = rec.topRightCorner.coordinates(1)
         val x_new: Vector[Double] = Vector(x_left, x_right, x_right, x_left, x_left)
         val y_new: Vector[Double] = Vector(y_bottom, y_bottom, y_top, y_top, y_bottom)
-        r = r :+ Vector(x_new,y_new)
+        r = r :+ Vector(x_new, y_new)
     }
 
-    var plotRectangle: Vector[Scatter] = Vector(Scatter(r0(0),r0(1)))
+    var plotRectangle: Vector[Scatter] = Vector(Scatter(r0(0), r0(1)))
     for (i <- r.indices) {
-      plotRectangle = plotRectangle :+ Scatter(r(i)(0),r(i)(1),fill=Fill.ToSelf)
+      plotRectangle = plotRectangle :+ Scatter(r(i)(0), r(i)(1), fill = Fill.ToSelf)
+    }
+
+    //TODO: delete this. add the folder htmlFiles to git instead
+
+    // if folder htmlFiles does not exist, create it
+    val path = System.getProperty("user.dir") + "/outputFiles/htmlFiles"
+    val dir = new File(path)
+    if (!dir.isDirectory) {
+      dir.mkdir()
     }
 
     plotRectangle.plot(
-      path="outputFiles/test/"+nameAlg+ uuid +".html",
+      path = "outputFiles/htmlFiles/" + nameAlg + uuid + ".html",
       Layout(
         title = "Rectangle Packing",
         showlegend = false,
         height = 600,
         width = 600),
       false,
-      true,
+      openInBrowser = show,
       true)
 
     /* Ancient plotly:
@@ -72,13 +86,5 @@ class Output(val instance: Instance, val rectangles:Map[Anchor,Rectangle]) {
     */
   }
 
-  // This is the value of the volumes of rectangles
-  def objectiveValue: Double = {
-    var finalValue: Double = 0
-    rectangles foreach {
-      case (_, rec) => finalValue = finalValue + rec.volume
-    }
-    finalValue
-  }
 
 }
