@@ -37,14 +37,6 @@ class Output(val instance: Instance, val rectangles: Map[Anchor, Rectangle]) {
       plotRectangle = plotRectangle :+ Scatter(r(i)(0), r(i)(1), fill = Fill.ToSelf)
     }
 
-    //TODO: delete this. add the folder htmlFiles to git instead
-
-    // if folder htmlFiles does not exist, create it
-    val path = System.getProperty("user.dir") + "/outputFiles/htmlFiles"
-    val dir = new File(path)
-    if (!dir.isDirectory) {
-      dir.mkdir()
-    }
 
     plotRectangle.plot(
       path = "outputFiles/htmlFiles/" + nameAlg + uuid + ".html",
