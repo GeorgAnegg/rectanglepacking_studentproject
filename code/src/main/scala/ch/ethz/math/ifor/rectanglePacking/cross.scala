@@ -14,6 +14,7 @@ object cross {
         i <- x
         j <- crossJoin(xs)
       } yield List(i) ++ j
+      case Nil => Nil
     }
 
 }

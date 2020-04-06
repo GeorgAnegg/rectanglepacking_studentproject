@@ -19,15 +19,12 @@ object Anchor {
 
   /** create a random Anchor in the right dimension (draw from [0,1]x[0,1] uniformly at random)
     */
-  def randomAnchor: Anchor = new Anchor(
-    (for (_ <- 1 to dimension) yield math.random).toVector
-  )
+  def randomAnchor: Anchor = new Anchor( Vector.fill(dimension)(math.random) )
 
   /**
     * create a list of random Anchors (draw from [0,1]x[0,1] uniformly at random)
     */
-  def random(n: Int): List[Anchor] =
-    (for (_ <- 1 to n) yield Anchor.randomAnchor).toList
+  def random(n: Int): List[Anchor] = List.fill(n)(Anchor.randomAnchor)
 
   def equallySpacedDiagonal(n: Int): List[Anchor] = (for (i<- 0 until n) yield Anchor(Vector.fill(dimension)(i/n.toDouble))).toList.reverse
 }

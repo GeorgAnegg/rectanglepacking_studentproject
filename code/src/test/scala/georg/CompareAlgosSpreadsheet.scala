@@ -31,8 +31,9 @@ object CompareAlgosSpreadsheet extends App {
   // construct random instances
   val numberOfAnchors = 5
   val numberOfInstances = 20
-  val instances: Vector[Instance] = (for (_ <- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
+  val instances: Vector[Instance] = Vector.fill(numberOfInstances)(Instance.createRandomUnitSquareInstance(numberOfAnchors))
 
+  // runs all algorithms, prints progress and puts outputs in data object
   val data: Vector[Vector[String]] = instances.zipWithIndex.map{case (instance, index) => { {println(s"solving instance ${index+1} out of $numberOfInstances")}; runAllAlgorithms(instance)}} //this gives a Vector of Vector[String] that can be filled into the spreadsheet
 
   writeSpreadsheet(data)
