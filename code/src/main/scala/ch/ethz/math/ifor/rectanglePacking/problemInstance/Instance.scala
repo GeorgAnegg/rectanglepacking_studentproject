@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
+package ch.ethz.math.ifor.rectanglePacking.problemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.{Rectangle, cross, dimension}
 import scala.util.Random
@@ -57,4 +57,6 @@ object Instance {
   def standardSquare(anchors: List[Anchor]): Instance = new Instance(Point.topright, List(), anchors)
 
   def createRandomUnitSquareInstance(n: Int): Instance = standardSquare(Anchor.origin :: Anchor.random(n - 1))
+
+  def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n))
 }

@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
+package ch.ethz.math.ifor.rectanglePacking.problemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.dimension
 
@@ -28,4 +28,6 @@ object Anchor {
     */
   def random(n: Int): List[Anchor] =
     (for (_ <- 1 to n) yield Anchor.randomAnchor).toList
+
+  def equallySpacedDiagonal(n: Int): List[Anchor] = (for (i<- 0 until n) yield Anchor(Vector.fill(dimension)(i/n.toDouble))).toList.reverse
 }
