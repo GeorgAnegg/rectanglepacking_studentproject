@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.Algorithms
+package ch.ethz.math.ifor.rectanglePacking.algorithms
 
 class Bruteforce {
 

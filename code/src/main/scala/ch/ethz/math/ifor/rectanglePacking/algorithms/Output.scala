@@ -1,7 +1,7 @@
-package ch.ethz.math.ifor.rectanglePacking.Algorithms
+package ch.ethz.math.ifor.rectanglePacking.algorithms
 
 import plotly._, element.Fill, layout._, Plotly._
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Instance}
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Instance}
 import ch.ethz.math.ifor.rectanglePacking.Rectangle
 
 import java.io.File

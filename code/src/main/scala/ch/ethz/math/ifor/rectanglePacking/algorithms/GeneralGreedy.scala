@@ -1,6 +1,6 @@
-package ch.ethz.math.ifor.rectanglePacking.Algorithms
+package ch.ethz.math.ifor.rectanglePacking.algorithms
 
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Instance, Point}
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.Rectangle
 
 object GeneralGreedy {

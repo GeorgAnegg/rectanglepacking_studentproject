@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
+package ch.ethz.math.ifor.rectanglePacking.problemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.{Rectangle, dimension, inf}
 

@@ -1,6 +1,6 @@
-package ch.ethz.math.ifor.rectanglePacking.Algorithms
+package ch.ethz.math.ifor.rectanglePacking.algorithms
 
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.Instance
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.Instance
 
 trait Algorithm {
 

@@ -1,7 +1,7 @@
 package maelys
 
-import ch.ethz.math.ifor.rectanglePacking.Algorithms.{Greedy, TilePacking}
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Instance, Point}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.{Rectangle, cross, dimension}
 
 object HelloRectanglePacking extends App {

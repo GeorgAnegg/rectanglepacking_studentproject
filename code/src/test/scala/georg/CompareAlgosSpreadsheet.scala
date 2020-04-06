@@ -2,8 +2,8 @@ package georg
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.Algorithms.{Greedy, TilePacking}
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Instance, Point}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.inf
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
@@ -29,7 +29,7 @@ object CompareAlgosSpreadsheet extends App {
   // val instances: Vector[Instance] = Vector(instance1,instance2)
 
   // construct random instances
-  val numberOfAnchors = 10
+  val numberOfAnchors = 5
   val numberOfInstances = 20
   val instances: Vector[Instance] = (for (_ <- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
 

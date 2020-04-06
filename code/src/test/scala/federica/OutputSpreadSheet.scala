@@ -2,8 +2,8 @@ package federica
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.Algorithms.Greedy
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Instance}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.Greedy
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import ch.ethz.math.ifor.rectanglePacking.inf
 

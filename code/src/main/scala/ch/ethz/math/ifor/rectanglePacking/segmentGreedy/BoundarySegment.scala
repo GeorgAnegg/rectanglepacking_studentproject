@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.SegmentGreedy
+package ch.ethz.math.ifor.rectanglePacking.segmentGreedy
 import ch.ethz.math.ifor.rectanglePacking.dimension
 
 

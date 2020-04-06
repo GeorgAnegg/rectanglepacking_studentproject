@@ -1,4 +1,4 @@
-package ch.ethz.math.ifor.rectanglePacking.ProblemInstance
+package ch.ethz.math.ifor.rectanglePacking.problemInstance
 
 case class BoundaryPoint(override val coordinates:Vector[Double]) extends Point(coordinates) {
 

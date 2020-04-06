@@ -1,7 +1,7 @@
 package ch.ethz.math.ifor.rectanglePacking
 
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Anchor, Point}
-import ch.ethz.math.ifor.rectanglePacking.SegmentGreedy.BoundarySegment
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Point}
+import ch.ethz.math.ifor.rectanglePacking.segmentGreedy.BoundarySegment
 
 case class Rectangle(originCorner : Point, topRightCorner: Point ) {
 
