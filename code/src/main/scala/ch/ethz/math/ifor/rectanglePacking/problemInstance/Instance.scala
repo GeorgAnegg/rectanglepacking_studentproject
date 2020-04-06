@@ -30,6 +30,8 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
 
   def normSort(p: Double, shift: Point = Point.topright): Instance = new Instance(topRightBox, forbiddenRectangles, anchors.sortWith(Point.compare(p, shift)))
 
+  def reverse: Instance = new Instance(topRightBox, forbiddenRectangles, anchors.reverse)
+
   def randomSort: Instance = new Instance(topRightBox, forbiddenRectangles, Random.shuffle(anchors))
 
   /** Checks if ordering given in instance is correct for tilepacking

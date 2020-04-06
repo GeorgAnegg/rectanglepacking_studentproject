@@ -3,19 +3,22 @@ package georg
 import java.io.FileOutputStream
 
 import ch.ethz.math.ifor.rectanglePacking.Algorithms.{Greedy, TilePacking}
-import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.Instance
+import ch.ethz.math.ifor.rectanglePacking.ProblemInstance.{Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.inf
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 object CompareAlgosSpreadsheet extends App {
+
 
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     Vector(
       instance.anchors.toString,
       Greedy.run(instance.normSort(1)).objectiveValue.toString,
       Greedy.run(instance.normSort(inf)).objectiveValue.toString,
+      Greedy.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString,
       TilePacking.run(instance.normSort(1)).objectiveValue.toString,
-      TilePacking.run(instance.normSort(inf)).objectiveValue.toString
+      TilePacking.run(instance.normSort(inf)).objectiveValue.toString,
+      TilePacking.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString
       // opt
     )
   }
@@ -45,8 +48,10 @@ object CompareAlgosSpreadsheet extends App {
       "Anchors",
       "l1Greedy",
       "linfGreedy",
+      "l-infGreedy",
       "l1TilePacking",
-      "linfTilePacking" //,
+      "linfTilePacking",
+      "l-infTilePacking"//,
       /*"opt"
       */
     )
