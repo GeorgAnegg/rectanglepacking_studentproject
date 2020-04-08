@@ -5,6 +5,12 @@ import ch.ethz.math.ifor.rectanglePacking.{Rectangle, dimension, inf}
 class Point(val coordinates: Vector[Double]) {
   require(coordinates.length == dimension,"Wrong number of coordinates in a point")
 
+  /** adds a small random perturbation to Point
+    * random pertubation is ~N(0,sigma)
+    * @return perturbed point
+    */
+  def perturb(sigma: Double): Point= ???
+
   /** point.subtract(shift) computes point-shift
     *
     * @param point
