@@ -2,8 +2,9 @@ package federica
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.algorithms.Greedy
-import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.problemInstance.Instance
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import ch.ethz.math.ifor.rectanglePacking.inf
 
@@ -13,14 +14,22 @@ object SpreadsheetWithPictures extends App {
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     val outputGreedy1 = Greedy.run(instance.normSort(1))
     val outputGreedyInf = Greedy.run(instance.normSort(inf))
+    val outputTilePacking1 = TilePacking.run(instance.normSort(1))
+    val outputTilePackingInf = TilePacking.run(instance.normSort(inf))
     outputGreedy1.writeHtmlFile("Greedy1")
     outputGreedyInf.writeHtmlFile("Greedyinf")
+    outputTilePacking1.writeHtmlFile("TilePacking1")
+    outputTilePackingInf.writeHtmlFile("TilePackingInf")
     Vector(
       instance.anchors.toString,
       outputGreedy1.objectiveValue.toString,
       outputGreedyInf.objectiveValue.toString,
-      "file:///"+System.getProperty("user.dir") + "/outputFiles/test/Greedy1"+outputGreedy1.uuid+".html",
-      "file:///"+System.getProperty("user.dir") +"/outputFiles/test/Greedyinf"+outputGreedyInf.uuid+".html"
+      outputTilePacking1.objectiveValue.toString,
+      outputTilePackingInf.objectiveValue.toString,
+      "file:///"+System.getProperty("user.dir") + "/outputFiles/htmlFiles/Greedy1"+outputGreedy1.uuid+".html",
+      "file:///"+System.getProperty("user.dir") +"/outputFiles/htmlFiles/Greedyinf"+outputGreedyInf.uuid+".html",
+      "file:///"+System.getProperty("user.dir") +"/outputFiles/htmlFiles/TilePacking1"+outputTilePacking1.uuid+".html",
+      "file:///"+System.getProperty("user.dir") +"/outputFiles/htmlFiles/TilePackingInf"+outputTilePackingInf.uuid+".html"
       // to be continued
       )
     }
@@ -28,8 +37,8 @@ object SpreadsheetWithPictures extends App {
     //val instance2 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin),Anchor(Vector(0.3,0.8)),Anchor(Vector(0.8,0.3))))
     //val instances: Vector[Instance] = Vector(instance1,instance2) //construct vectorOfInstances. we should have that function in the class Instance
 
-    val numberOfAnchors = 3
-    val numberOfInstances = 2
+    val numberOfAnchors = 8
+    val numberOfInstances = 1
     val instances: Vector[Instance] = (for (i<- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
 
     val data: Vector[Vector[String]] = instances.map(runAllAlgorithms) //this gives a Vector of Vector[String] that can be filled into the spreadsheet
@@ -44,8 +53,12 @@ object SpreadsheetWithPictures extends App {
         "Anchors",
         "l1Greedy",
         "linfGreedy",
+        "l1TilePacking",
+        "linfTilePacking",
         "l1GreedyPicture",
-        "linfGreedyPicture"//,
+        "linfGreedyPicture",
+        "l1TilePackingPicture",
+        "linfTilePackingPicture"//,
         /*"l1TilePacking",
         "linfTilePacking",
         "opt"

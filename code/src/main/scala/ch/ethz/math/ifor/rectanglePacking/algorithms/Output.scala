@@ -2,8 +2,11 @@ package ch.ethz.math.ifor.rectanglePacking.algorithms
 
 import plotly._, element.Fill, layout._, Plotly._
 import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Instance}
+import plotly._
+import element.{AxisReference, Fill}
+import layout._
+import Plotly._
 import ch.ethz.math.ifor.rectanglePacking.Rectangle
-
 import java.io.File
 
 class Output(val instance: Instance, val rectangles: Map[Anchor, Rectangle]) {
@@ -76,6 +79,29 @@ class Output(val instance: Instance, val rectangles: Map[Anchor, Rectangle]) {
     }
     draw(plot, "Output")
     */
+  }
+
+  // function used for subplots
+  def ScatterRectangles(nameAlg: String, xcoord: AxisReference, ycoord: AxisReference): Vector[plotly.Scatter] = {
+    val r0: Vector[Vector[Double]] = Vector(Vector(0, 0, 1, 1, 0), Vector(0, 1, 1, 0, 0))
+
+    var r: Vector[Vector[Vector[Double]]] = Vector()
+    rectangles.foreach {
+      case (_, rec) =>
+        val x_left: Double = rec.originCorner.coordinates(0)
+        val x_right: Double = rec.topRightCorner.coordinates(0)
+        val y_bottom: Double = rec.originCorner.coordinates(1)
+        val y_top: Double = rec.topRightCorner.coordinates(1)
+        val x_new: Vector[Double] = Vector(x_left, x_right, x_right, x_left, x_left)
+        val y_new: Vector[Double] = Vector(y_bottom, y_bottom, y_top, y_top, y_bottom)
+        r = r :+ Vector(x_new, y_new)
+    }
+
+    var plotRectangle: Vector[plotly.Scatter] = Vector(Scatter(r0(0), r0(1), name=nameAlg, xaxis = xcoord, yaxis = ycoord ))
+    for (i <- r.indices) {
+      plotRectangle = plotRectangle :+ Scatter(r(i)(0), r(i)(1), name=nameAlg, xaxis = xcoord, yaxis = ycoord, fill = Fill.ToSelf)
+    }
+    plotRectangle
   }
 
 
