@@ -2,7 +2,7 @@ package ch.ethz.math.ifor.rectanglePacking.mainFiles
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{BruteForce, Greedy, TilePacking}
 import ch.ethz.math.ifor.rectanglePacking.inf
 import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -31,8 +31,8 @@ object CompareAlgorithmsOnRandomInstances {
       Greedy.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString,
       TilePacking.run(instance.normSort(1)).objectiveValue.toString,
       TilePacking.run(instance.normSort(inf)).objectiveValue.toString,
-      TilePacking.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString
-      // opt
+      TilePacking.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString,
+      BruteForce.run(instance).objectiveValue.toString
     )
   }
 
@@ -49,9 +49,8 @@ object CompareAlgorithmsOnRandomInstances {
       "l-infGreedy",
       "l1TilePacking",
       "linfTilePacking",
-      "l-infTilePacking"//,
-      /*"opt"
-      */
+      "l-infTilePacking",
+      "bruteforce"
     )
 
     for (i <- columns.indices) {
