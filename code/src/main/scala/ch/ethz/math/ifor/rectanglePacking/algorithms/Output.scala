@@ -8,7 +8,7 @@ import java.io.File
 
 class Output(val instance: Instance, val rectangles: Map[Anchor, Rectangle]) {
   //to make sure that the Map rectangles uses the anchors of the instance
-  assert(rectangles.keySet == instance.anchors.toSet)
+  require(rectangles.keySet == instance.anchors.toSet,"Output keys wrong")
 
   val uuid: String = java.util.UUID.randomUUID.toString
 

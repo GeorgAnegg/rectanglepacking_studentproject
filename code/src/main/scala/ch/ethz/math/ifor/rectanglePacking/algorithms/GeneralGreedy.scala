@@ -58,7 +58,7 @@ object GeneralGreedy {
     */
   def auxiliaryRun(instance: Instance, possibleTops: List[Point],tilePacking: Boolean):Output = {
     if (instance.anchors.length>1) {
-      greedyIteration(instance,possibleTops,tilePacking)
+      //greedyIteration(instance,possibleTops,tilePacking)
       // pick rectangle for first anchor in instance
       val (newInstance, rectangle) = greedyIteration(instance,possibleTops,tilePacking)
       // recurse. run greedy on remaining Instance

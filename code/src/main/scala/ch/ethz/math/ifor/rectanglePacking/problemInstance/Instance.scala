@@ -25,7 +25,7 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     * @return
     */
   def tops(): List[Point] = {
-    (cross.crossJoin[Double]((0 until dimension).map(j => ((anchors.map(a => a.coordinates(j)) ++ List(topRightBox.coordinates(j)) ++ forbiddenRectangles.map(r => r.originCorner.coordinates(j)) ++ forbiddenRectangles.map(r => r.topRightCorner.coordinates(j)))).distinct).toList)).map(l => new Point(l.toVector)).distinct
+    (cross.crossJoin[Double]((0 until dimension).map(j => ((anchors.map(a => a.coordinates(j)) ++ List(topRightBox.coordinates(j)) ++ forbiddenRectangles.map(r => r.originCorner.coordinates(j)) ++ forbiddenRectangles.map(r => r.topRightCorner.coordinates(j)))).distinct).toList)).distinct.map(l => new Point(l.toVector)).distinct
   }
 
   def normSort(p: Double, shift: Point = Point.topright): Instance = new Instance(topRightBox, forbiddenRectangles, anchors.sortWith(Point.compare(p, shift)))
@@ -40,7 +40,7 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     * @return
     */
   def tilePackingSorted(): Boolean = {
-    anchors.combinations(2).toList.forall(p => !(p(0).dominatesLoose(p(1))))
+    anchors.combinations(2).toList.forall(p => p(0).coordinates==p(1).coordinates || !(p(0).dominatesLoose(p(1))))
   }
 
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering

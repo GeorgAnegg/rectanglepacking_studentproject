@@ -67,7 +67,7 @@ class Point(val coordinates: Vector[Double]) {
     * @return
     */
   def inRectStrictUP(r:Rectangle): Boolean = {
-    r.originCorner.dominatesLoose(this) && this.dominatesStrict(r.topRightCorner)
+    r.originCorner.dominatesLoose(this) && this.dominatesStrict(r.topRightCorner) && r.originCorner.coordinates!=coordinates
   }
 
 }
