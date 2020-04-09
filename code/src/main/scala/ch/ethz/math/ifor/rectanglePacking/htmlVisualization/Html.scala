@@ -71,7 +71,7 @@ object Html {
   }
 
   // function used for subplots
-  def ScatterRectangles(output:Output, nameAlg: String, xcoord: AxisReference, ycoord: AxisReference): Vector[plotly.Scatter] = {
+  def scatterRectangles(output:Output, nameAlg: String, xcoord: AxisReference, ycoord: AxisReference): Vector[plotly.Scatter] = {
     val r0: Vector[Vector[Double]] = Vector(Vector(0, 0, 1, 1, 0), Vector(0, 1, 1, 0, 0))
 
     var r: Vector[Vector[Vector[Double]]] = Vector()

@@ -38,6 +38,20 @@ object SubplotTest extends App {
     xaxis = AxisReference.X4,
     yaxis = AxisReference.Y4)
 
+  /*val trace5 = Scatter(
+    data,
+    data,
+    //name = "(1,2)",
+    xaxis = AxisReference.X5,
+    yaxis = AxisReference.Y5)
+
+  val trace6 = Scatter(
+    data,
+    data,
+    //name = "(1,2)",
+    xaxis = AxisReference.X6,
+    yaxis = AxisReference.Y6)*/
+
   Seq(trace1, trace2, trace3, trace4).plot(
     path = "outputFiles/psubplots.html",
     Layout(
@@ -48,28 +62,39 @@ object SubplotTest extends App {
         domain = (0, 0.45)),
       yaxis = Axis(
         anchor = AxisAnchor.Reference(AxisReference.X1),
-        domain = (0.5, 1)),
+        domain = (0.7, 1)),
       xaxis2 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.Y2),
         domain = (0.55, 1)),
       yaxis2 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.X2),
-        domain = (0.8, 1)),
+        domain = (0.7, 1)),
       xaxis3 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.Y3),
-        domain = (0.55, 1)),
+        domain = (0, 0.45)),
       yaxis3 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.X3),
-        domain = (0.5, 0.75)),
+        domain = (0.4, 0.6)),
       xaxis4 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.Y4),
-        domain = (0, 1)),
+        domain = (0.55, 1)),
       yaxis4 = Axis(
         anchor = AxisAnchor.Reference(AxisReference.X4),
-        domain = (0, 0.45))),
+        domain = (0.4, 0.6))),
+      /*xaxis5 = Axis(
+        anchor = AxisAnchor.Reference(AxisReference.Y5),
+        domain = (0, 0.45)),
+      yaxis5 = Axis(
+        anchor = AxisAnchor.Reference(AxisReference.X5),
+        domain = (0, 0.3)),
+      xaxis6 = Axis(
+        anchor = AxisAnchor.Reference(AxisReference.Y6),
+        domain = (0.55, 1)),
+      yaxis6 = Axis(
+        anchor = AxisAnchor.Reference(AxisReference.X6),
+        domain = (0, 0.3))),*/
     false,
     false,
     true)
-
 
 }

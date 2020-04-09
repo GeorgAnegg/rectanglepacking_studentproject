@@ -3,8 +3,8 @@ package federica
 import java.io.FileOutputStream
 
 import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.htmlVisualization.Html
 import ch.ethz.math.ifor.rectanglePacking.problemInstance.Instance
-
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import ch.ethz.math.ifor.rectanglePacking.inf
 
@@ -16,10 +16,10 @@ object SpreadsheetWithPictures extends App {
     val outputGreedyInf = Greedy.run(instance.normSort(inf))
     val outputTilePacking1 = TilePacking.run(instance.normSort(1))
     val outputTilePackingInf = TilePacking.run(instance.normSort(inf))
-    outputGreedy1.writeHtmlFile("Greedy1")
-    outputGreedyInf.writeHtmlFile("Greedyinf")
-    outputTilePacking1.writeHtmlFile("TilePacking1")
-    outputTilePackingInf.writeHtmlFile("TilePackingInf")
+    Html.writeHtmlFile(outputGreedy1,"Greedy1")
+    Html.writeHtmlFile(outputGreedyInf,"Greedyinf")
+    Html.writeHtmlFile(outputTilePacking1,"TilePacking1")
+    Html.writeHtmlFile(outputTilePackingInf,"TilePackingInf")
     Vector(
       instance.anchors.toString,
       outputGreedy1.objectiveValue.toString,

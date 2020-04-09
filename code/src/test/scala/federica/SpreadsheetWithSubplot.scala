@@ -2,32 +2,37 @@ package federica
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{BruteForce, Greedy, TilePacking}
 import ch.ethz.math.ifor.rectanglePacking.problemInstance.Instance
 import ch.ethz.math.ifor.rectanglePacking.inf
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-
 import plotly.Scatter
 import plotly._
 import layout._
 import Plotly._
+import ch.ethz.math.ifor.rectanglePacking.htmlVisualization.Html
 import plotly.element.{AxisAnchor, AxisReference}
 
 object SpreadsheetWithSubplot extends App {
 
   def runAllAlgorithms(instance: Instance): Vector[String] = {
+    println("Computing Greedy")
     val outputGreedy1 = Greedy.run(instance.normSort(1))
     val outputGreedyInf = Greedy.run(instance.normSort(inf))
+    println("Computing TilePacking")
     val outputTilePacking1 = TilePacking.run(instance.normSort(1))
     val outputTilePackingInf = TilePacking.run(instance.normSort(inf))
-        
-    val trace1: Vector[Scatter] = outputGreedy1.ScatterRectangles("l1Greedy",AxisReference.X1,AxisReference.Y1)
-    val trace2: Vector[Scatter] = outputGreedyInf.ScatterRectangles("linfGreedy",AxisReference.X2,AxisReference.Y2)
-    val trace3: Vector[Scatter] = outputTilePacking1.ScatterRectangles("l1TilePacking",AxisReference.X3,AxisReference.Y3)
-    val trace4: Vector[Scatter] = outputTilePackingInf.ScatterRectangles("linfTilePacking",AxisReference.X4,AxisReference.Y4)
+    println("Computing BruteForce")
+    val outputBruteForce = BruteForce.run(instance)
+
+    val trace1: Vector[Scatter] = Html.scatterRectangles(outputGreedy1,"l1Greedy",AxisReference.X1,AxisReference.Y1)
+    //val trace2: Vector[Scatter] = Html.scatterRectangles(outputGreedyInf,"linfGreedy",AxisReference.X2,AxisReference.Y2)
+    val trace3: Vector[Scatter] = Html.scatterRectangles(outputTilePacking1, "l1TilePacking",AxisReference.X2,AxisReference.Y2)
+    //val trace4: Vector[Scatter] = Html.scatterRectangles(outputTilePackingInf,"linfTilePacking",AxisReference.X4,AxisReference.Y4)
+    val trace5: Vector[Scatter] = Html.scatterRectangles(outputBruteForce, "BruteForce",AxisReference.X3,AxisReference.Y3)
 
     // Subplot
-    val subplot: Vector[Scatter] = trace1 ++ trace2 ++ trace3 ++ trace4
+    val subplot: Vector[Scatter] = trace1 ++ trace3 ++ trace5
     subplot.plot(
       path = "outputFiles/htmlFiles/"+outputGreedy1.uuid+".html",
       Layout(
@@ -52,13 +57,13 @@ object SpreadsheetWithSubplot extends App {
           domain = (0, 0.48)),
         yaxis3 = Axis(
           anchor = AxisAnchor.Reference(AxisReference.X3),
-          domain = (0, 0.48)),
+          domain = (0, 0.48))/*,
         xaxis4 = Axis(
           anchor = AxisAnchor.Reference(AxisReference.Y4),
           domain = (0.52, 1)),
         yaxis4 = Axis(
           anchor = AxisAnchor.Reference(AxisReference.X4),
-          domain = (0, 0.48))),
+          domain = (0, 0.48))*/),
       false,
       false,
       true)
@@ -70,6 +75,7 @@ object SpreadsheetWithSubplot extends App {
       outputGreedyInf.objectiveValue.toString,
       outputTilePacking1.objectiveValue.toString,
       outputTilePackingInf.objectiveValue.toString,
+      outputBruteForce.objectiveValue.toString,
       "file:///"+System.getProperty("user.dir") + "/outputFiles/htmlFiles/"+outputGreedy1.uuid+".html",
       // to be continued
     )
@@ -78,7 +84,7 @@ object SpreadsheetWithSubplot extends App {
   //val instance2 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin),Anchor(Vector(0.3,0.8)),Anchor(Vector(0.8,0.3))))
   //val instances: Vector[Instance] = Vector(instance1,instance2) //construct vectorOfInstances. we should have that function in the class Instance
 
-  val numberOfAnchors = 9
+  val numberOfAnchors = 8
   val numberOfInstances = 1
   val instances: Vector[Instance] = (for (i<- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
 
@@ -96,11 +102,8 @@ object SpreadsheetWithSubplot extends App {
       "linfGreedy",
       "l1TilePacking",
       "linfTilePacking",
+      "BruteForce",
       "Pictures"//,
-      /*"l1TilePacking",
-      "linfTilePacking",
-      "opt"
-      */
     )
 
     for (i<- columns.indices) {
