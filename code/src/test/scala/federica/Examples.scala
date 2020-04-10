@@ -14,7 +14,7 @@ import plotly.element.{AxisAnchor, AxisReference}
 
 object Examples extends App {
 
-  def runAllAlgorithms(instance: Instance, upperBound: Double): (Double, Vector[String]) = {
+  def runAllAlgorithms(instance: Instance, upperBound: Double): Vector[String] = {
     println("Computing Greedy")
     val outputGreedy1 = Greedy.run(instance.normSort(1))
     val outputGreedyInf = Greedy.run(instance.normSort(inf))
@@ -24,9 +24,9 @@ object Examples extends App {
     println("Computing BruteForce")
     val outputBruteForce = BruteForce.run(instance)
 
-    val maxObjVal: Double = Vector(outputGreedy1.objectiveValue,outputGreedyInf.objectiveValue,outputTilePacking1.objectiveValue,outputTilePackingInf.objectiveValue,outputBruteForce.objectiveValue).max
+    //val maxObjVal: Double = Vector(outputGreedy1.objectiveValue,outputGreedyInf.objectiveValue,outputTilePacking1.objectiveValue,outputTilePackingInf.objectiveValue,outputBruteForce.objectiveValue).max
 
-    if (maxObjVal < upperBound) {
+    if (outputBruteForce.objectiveValue < upperBound) {
       val trace1: Vector[Scatter] = Html.scatterRectangles(outputGreedy1, "l1Greedy", AxisReference.X1, AxisReference.Y1)
       val trace2: Vector[Scatter] = Html.scatterRectangles(outputGreedyInf,"linfGreedy",AxisReference.X2,AxisReference.Y2)
       val trace3: Vector[Scatter] = Html.scatterRectangles(outputTilePacking1, "l1TilePacking", AxisReference.X3, AxisReference.Y3)
@@ -74,7 +74,7 @@ object Examples extends App {
         false,
         true)
 
-      (maxObjVal,
+
       Vector(
         instance.anchors.toString,
         outputGreedy1.objectiveValue.toString,
@@ -84,14 +84,14 @@ object Examples extends App {
         outputBruteForce.objectiveValue.toString,
         "file:///" + System.getProperty("user.dir") + "/outputFiles/htmlFiles/" + outputGreedy1.uuid + ".html",
         // to be continued
-      ))
+      )
     } else
-      {(0,Vector())}
+      {Vector()}
   }
 
   val numberOfValues: Integer = 6
   val vectorNumberOfAnchors: Vector[Integer] = Vector(3,4,5,6,7,8)
-  val vectorNumberOfInstances: Vector[Integer] = Vector(10000,5000,1000,1000,50,0)
+  val vectorNumberOfInstances: Vector[Integer] = Vector(1000,1000,1000,1000,10,0)
   val upperBound: Double = 0.7
 
   var totalData: Vector[Vector[String]] = Vector()
@@ -100,7 +100,7 @@ object Examples extends App {
     val numberOfAnchors = vectorNumberOfAnchors(j)
     val numberOfInstances = vectorNumberOfInstances(j)
     val instances: Vector[Instance] = (for (i<- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
-    val data: Vector[Vector[String]] = instances.map(runAllAlgorithms(_,upperBound)).map(i=>i._2).filterNot(_==Vector()).map(i=>numberOfAnchors.toString +: i)
+    val data: Vector[Vector[String]] = instances.map(runAllAlgorithms(_,upperBound)).filterNot(_==Vector()).map(i=>numberOfAnchors.toString +: i)
     totalData = totalData ++ data
   }
 
@@ -146,7 +146,7 @@ object Examples extends App {
       }
     }
 
-    val filename = System.getProperty("user.dir") + "/outputFiles/test/"+"GeneralTest1.xlsx"
+    val filename = System.getProperty("user.dir") + "/outputFiles/test/"+"GeneralTest0.xlsx"
 
     val fileOut = new FileOutputStream(filename)
     workbook.write(fileOut)
