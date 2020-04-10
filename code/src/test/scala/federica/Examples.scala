@@ -70,9 +70,9 @@ object Examples extends App {
           yaxis4 = Axis(
             anchor = AxisAnchor.Reference(AxisReference.X4),
             domain = (0, 0.45))),
-        false,
-        false,
-        true)
+        useCdn = false,
+        openInBrowser = false,
+        addSuffixIfExists = true)
 
 
       Vector(
@@ -99,7 +99,7 @@ object Examples extends App {
   for (j <- 0 until numberOfValues){
     val numberOfAnchors = vectorNumberOfAnchors(j)
     val numberOfInstances = vectorNumberOfInstances(j)
-    val instances: Vector[Instance] = (for (i<- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
+    val instances: Vector[Instance] = (for (_ <- 1 to numberOfInstances) yield Instance.createRandomUnitSquareInstance(numberOfAnchors)).toVector
     val data: Vector[Vector[String]] = instances.map(runAllAlgorithms(_,upperBound)).filterNot(_==Vector()).map(i=>numberOfAnchors.toString +: i)
     totalData = totalData ++ data
   }
@@ -135,7 +135,7 @@ object Examples extends App {
       cell.setCellValue(columns(i))
     }
 
-    var numberOfHeaderRows = 1
+    val numberOfHeaderRows = 1
 
     data.indices.foreach{
       i=> {
