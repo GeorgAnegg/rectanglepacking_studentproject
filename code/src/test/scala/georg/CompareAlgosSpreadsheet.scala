@@ -9,6 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 object CompareAlgosSpreadsheet extends App {
 
+  val spreadsheetName: String = "OutputTest.xlsx"
 
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     Vector(
@@ -73,7 +74,7 @@ object CompareAlgosSpreadsheet extends App {
       }
     }
 
-    val filename = System.getProperty("user.dir") + "/outputFiles/" + "OutputTest.xlsx"
+    val filename = System.getProperty("user.dir") + "/outputFiles/" + spreadsheetName
 
     val fileOut = new FileOutputStream(filename)
     workbook.write(fileOut)
