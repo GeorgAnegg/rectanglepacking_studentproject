@@ -60,5 +60,5 @@ object Instance {
 
   def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1) :+ Anchor.origin)
 
-  def perturbedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1).map(_.perturb()) :+ Anchor.origin)
+  def perturbedDiagonal(n: Int, sigma: Double = 0.1): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1).map(_.perturb(sigma)) :+ Anchor.origin)
 }
