@@ -8,7 +8,7 @@ import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 object CompareAlgorithmsOnRandomInstances {
-  def main(args: Array[String]): Unit = {
+  def main_method(args: Array[String]): Unit = {
 
     val numberOfAnchors = 4
     val numberOfInstances = 10
