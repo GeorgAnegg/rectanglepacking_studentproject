@@ -2,12 +2,22 @@ package ch.ethz.math.ifor.rectanglePacking.problemInstance
 
 import ch.ethz.math.ifor.rectanglePacking.dimension
 
+import scala.util.Random
+
 case class Anchor(override val coordinates: Vector[Double]) extends Point(coordinates) {
 
   /** after a rectangle has been picked for this anchor, it becomes a boundary point of a new shape
     *
     */
   def transform: BoundaryPoint = BoundaryPoint(coordinates)
+
+  /** adds a small random perturbation to Anchor (and makes sure it stays in the unit square)
+    * random pertubation is ~N(0,sigma)
+    * @return perturbed point
+    */
+  def perturb(sigma: Double = 0.1): Anchor= Anchor(coordinates.map(coord => math.max(0,math.min(1,coord+Random.nextGaussian()*sigma))))
+
+
 
 }
 

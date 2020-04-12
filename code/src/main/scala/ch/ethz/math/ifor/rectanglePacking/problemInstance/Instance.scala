@@ -50,6 +50,8 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     */
   def customSort(list: List[Int]): Instance = ???
 
+  def perturb(sigma:Double = 0.1): Instance = new Instance (topRightBox, forbiddenRectangles, anchors.map(_.perturb(sigma)))
+
 }
 
 
