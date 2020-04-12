@@ -50,15 +50,15 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     */
   def customSort(list: List[Int]): Instance = ???
 
-  def perturb(sigma:Double = 0.1): Instance = new Instance (topRightBox, forbiddenRectangles, anchors.map(_.perturb(sigma)))
-
 }
 
 
 object Instance {
   def standardSquare(anchors: List[Anchor]): Instance = new Instance(Point.topright, List(), anchors)
 
-  def createRandomUnitSquareInstance(n: Int): Instance = standardSquare(Anchor.origin :: Anchor.random(n - 1))
+  def createRandomUnitSquareInstance(n: Int): Instance = standardSquare(Anchor.random(n - 1) :+ Anchor.origin)
 
-  def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n))
+  def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1) :+ Anchor.origin)
+
+  def perturbedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1).map(_.perturb()) :+ Anchor.origin)
 }

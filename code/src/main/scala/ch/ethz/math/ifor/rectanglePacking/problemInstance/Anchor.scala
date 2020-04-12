@@ -36,5 +36,5 @@ object Anchor {
     */
   def random(n: Int): List[Anchor] = List.fill(n)(Anchor.randomAnchor)
 
-  def equallySpacedDiagonal(n: Int): List[Anchor] = (for (i<- 0 until n) yield Anchor(Vector.fill(dimension)(i/n.toDouble))).toList.reverse
+  def equallySpacedDiagonal(n: Int): List[Anchor] = (for (i<- 1 until n+1) yield Anchor(Vector.fill(dimension)(i/(n+1).toDouble))).toList.reverse
 }

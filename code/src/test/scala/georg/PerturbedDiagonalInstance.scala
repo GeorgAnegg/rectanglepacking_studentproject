@@ -28,7 +28,7 @@ object PerturbedDiagonalInstance extends App {
   // construct perturbed diagonal instances
   val numberOfAnchors = 5
   val numberOfInstances = 20
-  val instances: Vector[Instance] = Vector(Instance.equallySpacedDiagonal(numberOfAnchors))++Vector.fill(numberOfInstances)(Instance.equallySpacedDiagonal(numberOfAnchors).perturb())
+  val instances: Vector[Instance] = Vector(Instance.equallySpacedDiagonal(numberOfAnchors))++Vector.fill(numberOfInstances-1)(Instance.perturbedDiagonal(numberOfAnchors))
 
   // runs all algorithms, prints progress and puts outputs in data object
   val data: Vector[Vector[String]] = instances.zipWithIndex.map{case (instance, index) => { {println(s"solving instance ${index+1} out of $numberOfInstances")}; runAllAlgorithms(instance)}} //this gives a Vector of Vector[String] that can be filled into the spreadsheet
