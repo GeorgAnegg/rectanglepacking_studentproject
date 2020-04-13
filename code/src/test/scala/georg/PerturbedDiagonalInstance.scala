@@ -9,7 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 object PerturbedDiagonalInstance extends App {
 
-  val spreadsheetName: String = "OutputTest.xlsx"
+  val spreadsheetName: String = "PerturbedDiagonal.xlsx"
 
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     Vector(

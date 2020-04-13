@@ -40,7 +40,7 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     * @return
     */
   def tilePackingSorted(): Boolean = {
-    anchors.combinations(2).toList.forall(p => p(0).coordinates==p(1).coordinates || !(p(0).dominatesLoose(p(1))))
+    anchors.combinations(2).toList.forall(p => p(0).coordinates == p(1).coordinates || !(p(0).dominatesLoose(p(1))))
   }
 
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering
@@ -58,7 +58,14 @@ object Instance {
 
   def createRandomUnitSquareInstance(n: Int): Instance = standardSquare(Anchor.random(n - 1) :+ Anchor.origin)
 
-  def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1) :+ Anchor.origin)
+  def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n - 1) :+ Anchor.origin)
 
-  def perturbedDiagonal(n: Int, sigma: Double = 0.1): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-1).map(_.perturb(sigma)) :+ Anchor.origin)
+  def perturbedDiagonal(n: Int, sigma: Double = 0.1): Instance = standardSquare(Anchor.equallySpacedDiagonal(n - 1).map(_.perturb(sigma)) :+ Anchor.origin)
+
+  def extraPointsDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-2) :+ Anchor.origin :+ Anchor.randomAnchor)
+
+  def symExtraPointsDiagonal(n: Int): Instance = {
+    val newAnchor = Anchor.randomAnchor
+    standardSquare(Anchor.equallySpacedDiagonal(n-3) :+ Anchor.origin :+ newAnchor :+ newAnchor.reflect2D)
+  }
 }

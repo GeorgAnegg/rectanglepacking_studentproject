@@ -17,7 +17,7 @@ case class Anchor(override val coordinates: Vector[Double]) extends Point(coordi
     */
   def perturb(sigma: Double = 0.1): Anchor= Anchor(coordinates.map(coord => math.max(0,math.min(1,coord+Random.nextGaussian()*sigma))))
 
-
+  def reflect2D: Anchor = {assert(coordinates.length ==2); Anchor(coordinates.reverse)}
 
 }
 

@@ -7,9 +7,9 @@ import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.inf
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
-object CompareAlgosSpreadsheet extends App {
+object AddExtraPointsToDiagonalInstance extends App {
 
-  val spreadsheetName: String = "CompareAlgos.xlsx"
+  val spreadsheetName: String = "ExtraPointsDiagonal.xlsx"
 
   def runAllAlgorithms(instance: Instance): Vector[String] = {
     Vector(
@@ -24,15 +24,14 @@ object CompareAlgosSpreadsheet extends App {
     )
   }
 
-  // manually construct instances
-  // val instance1 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin)))
-  // val instance2 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin),Anchor(Vector(0.3,0.8)),Anchor(Vector(0.8,0.3))))
-  // val instances: Vector[Instance] = Vector(instance1,instance2)
 
-  // construct random instances
+  // construct perturbed diagonal instances
   val numberOfAnchors = 5
   val numberOfInstances = 20
-  val instances: Vector[Instance] = Vector.fill(numberOfInstances)(Instance.createRandomUnitSquareInstance(numberOfAnchors))
+  //add a single point
+  //val instances: Vector[Instance] = Vector(Instance.equallySpacedDiagonal(numberOfAnchors))++Vector.fill(numberOfInstances-1)(Instance.extraPointsDiagonal(numberOfAnchors).normSort(1))
+  //add a pair of symmetric points
+  val instances: Vector[Instance] = Vector(Instance.equallySpacedDiagonal(numberOfAnchors))++Vector.fill(numberOfInstances-1)(Instance.symExtraPointsDiagonal(numberOfAnchors).normSort(1))
 
   // runs all algorithms, prints progress and puts outputs in data object
   val data: Vector[Vector[String]] = instances.zipWithIndex.map{case (instance, index) => { {println(s"solving instance ${index+1} out of $numberOfInstances")}; runAllAlgorithms(instance)}} //this gives a Vector of Vector[String] that can be filled into the spreadsheet
