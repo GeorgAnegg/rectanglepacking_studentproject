@@ -40,7 +40,7 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     * @return
     */
   def tilePackingSorted(): Boolean = {
-    anchors.combinations(2).toList.forall(p => p(0).coordinates == p(1).coordinates || !(p(0).dominatesLoose(p(1))))
+    anchors.combinations(2).toList.forall(p => p(0).coordinates == p(1).coordinates || !(p(0).dominatesStrict(p(1))))
   }
 
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering
@@ -50,6 +50,10 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     */
   def customSort(list: List[Int]): Instance = ???
 
+  def perturbed(sigma:Double=0.1): Instance = {
+    new Instance(topRightBox,forbiddenRectangles,anchors.map(a=>a.perturbNotOrigin(sigma)))
+  }
+
 }
 
 
@@ -58,14 +62,38 @@ object Instance {
 
   def createRandomUnitSquareInstance(n: Int): Instance = standardSquare(Anchor.random(n - 1) :+ Anchor.origin)
 
+  /** Points equally spaced on the diagonal */
   def equallySpacedDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n - 1) :+ Anchor.origin)
 
+  /** Points randomly spaced on the diagonal */
+  def randomSpacedDiagonal(n:Int): Instance = standardSquare(Anchor.randomSpacedDiagonal(n-1):+Anchor.origin)
+
+  /** Points equally spaced on the diagonal and perturbed */
   def perturbedDiagonal(n: Int, sigma: Double = 0.1): Instance = standardSquare(Anchor.equallySpacedDiagonal(n - 1).map(_.perturb(sigma)) :+ Anchor.origin)
+
+  /** Points randomly spaced on the diagonal and perturbed */
+  def perturbedRandomDiagonal(n:Int,sigma:Double=0.1): Instance = standardSquare(Anchor.randomSpacedDiagonal(n-1).map(_.perturb(sigma)):+Anchor.origin)
+
+  /** Points equally spaced on the anti diagonal  */
+  def equallySpacedAntiDiagonal(n:Int): Instance=standardSquare(Anchor.equallySpaceAntiDiagonal(n - 1) :+ Anchor.origin)
+
+  /**  Points randomly spaced on the anti diagonal*/
+  def randomSpacedAntiDiagonal(n:Int): Instance = standardSquare(Anchor.randomSpaceAntiDiagonal(n-1):+Anchor.origin)
+
+  /** Points equally spaced on the anti diagonal and perturbed */
+  def perturbedAntiDiagonal(n: Int, sigma: Double = 0.1): Instance = standardSquare(Anchor.equallySpaceAntiDiagonal(n - 1).map(_.perturb(sigma)) :+ Anchor.origin)
+
+  /** Points randomly spaced on the anti diagonal and perturbed */
+  def perturbedRandomAntiDiagonal(n:Int,sigma:Double=0.1): Instance = standardSquare(Anchor.randomSpaceAntiDiagonal(n-1).map(_.perturb(sigma)):+Anchor.origin)
 
   def extraPointsDiagonal(n: Int): Instance = standardSquare(Anchor.equallySpacedDiagonal(n-2) :+ Anchor.origin :+ Anchor.randomAnchor)
 
   def symExtraPointsDiagonal(n: Int): Instance = {
     val newAnchor = Anchor.randomAnchor
     standardSquare(Anchor.equallySpacedDiagonal(n-3) :+ Anchor.origin :+ newAnchor :+ newAnchor.reflect2D)
+  }
+/** Creates a random diagonal perturbed with n/2 anchors, and n/2 anchors in the lower part */
+  def diagPlusLow(n:Int,sigma:Double=0.1): Instance = {
+    standardSquare(Anchor.randomSpacedDiagonal(((n-1).toDouble/2).floor.toInt).map(_.perturb(sigma)) ++ Anchor.lowAnchors(((n-1).toDouble/2).ceil.toInt):+ Anchor.origin)
   }
 }
