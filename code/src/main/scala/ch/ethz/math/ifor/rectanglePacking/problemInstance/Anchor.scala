@@ -71,4 +71,14 @@ object Anchor {
     require(dimension==2)
     List.fill(n)(lowAnchor())
   }
+
+  def upAnchor(): Anchor = {
+    val a=math.random()
+    Anchor(Vector(math.max(0,math.min(a,(a/10+Random.nextGaussian()*(a/20)))),a))
+  }
+  /** List of low anchors */
+  def upAnchors(n:Int): List[Anchor]={
+    require(dimension==2)
+    List.fill(n)(upAnchor())
+  }
 }

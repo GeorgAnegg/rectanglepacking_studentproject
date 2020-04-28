@@ -35,9 +35,12 @@ class Point(val coordinates: Vector[Double]) {
     */
 
   def normS(p: Double, shift: Point = Point.topright): Double = {
-    require(p > 0,"Wrong p for the norm")
+    require(p > 0 || p==(-inf),"Wrong p for the norm")
     if (p == inf) {
       subtract(shift).coordinates.map(_.abs).max
+    }
+    else if (p==(-inf)) {
+      subtract(shift).coordinates.map(_.abs).min
     }
     else {
       Math.pow(subtract(shift).coordinates.map(a => Math.pow(a.abs, p)).sum, 1 / p)
@@ -83,8 +86,14 @@ object Point {
     * @return
     */
   def compare(p: Double, shift: Point): (Point, Point) => Boolean = {
-    (point1: Point, point2: Point) =>
-      point1.normS(p, shift) < point2.normS(p, shift)
+    if (p != inf) {
+      (point1: Point, point2: Point) =>
+        point1.normS(p, shift) < point2.normS(p, shift)
+    }
+    else {
+      (point1: Point, point2: Point) =>
+        (point1.normS(p, shift) < point2.normS(p, shift) || (point1.normS(p, shift) == point2.normS(p, shift) && point1.normS(1, shift) < point2.normS(1, shift)))
+    }
   }
 
 

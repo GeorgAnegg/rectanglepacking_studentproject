@@ -40,7 +40,7 @@ class Instance(val topRightBox: Point, val forbiddenRectangles: List[Rectangle],
     * @return
     */
   def tilePackingSorted(): Boolean = {
-    anchors.combinations(2).toList.forall(p => p(0).coordinates == p(1).coordinates || !(p(0).dominatesStrict(p(1))))
+    anchors.combinations(2).toList.forall(p => p(0).coordinates == p(1).coordinates || !(p(0).dominatesLoose(p(1))))
   }
 
   /** this takes as input a permutation of the indices of the anchors and gives an instance with that ordering
@@ -95,5 +95,10 @@ object Instance {
 /** Creates a random diagonal perturbed with n/2 anchors, and n/2 anchors in the lower part */
   def diagPlusLow(n:Int,sigma:Double=0.1): Instance = {
     standardSquare(Anchor.randomSpacedDiagonal(((n-1).toDouble/2).floor.toInt).map(_.perturb(sigma)) ++ Anchor.lowAnchors(((n-1).toDouble/2).ceil.toInt):+ Anchor.origin)
+  }
+
+  def diagPlusLowUp(n:Int,sigma:Double=0.1): Instance = {
+    val m=((n-1).toDouble/3).ceil.toInt
+    standardSquare(Anchor.randomSpacedDiagonal(n-1-2*m).map(_.perturb(sigma)) ++ Anchor.lowAnchors(m)++Anchor.upAnchors(m):+ Anchor.origin)
   }
 }

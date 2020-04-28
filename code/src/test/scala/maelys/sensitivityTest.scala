@@ -22,19 +22,20 @@ object sensitivityTest extends App {
     val outputTilePacking1 = TilePacking.run(instance.normSort(1))
     val outputTilePackingInf = TilePacking.run(instance.normSort(inf))
     println("Computing BruteForce")
-    val outputBruteForce = BruteForce.run(instance)
+    //val outputBruteForce = BruteForce.run(instance)
+    val outputBruteForce = 1.toDouble
 
     //val maxObjVal: Double = Vector(outputGreedy1.objectiveValue,outputGreedyInf.objectiveValue,outputTilePacking1.objectiveValue,outputTilePackingInf.objectiveValue,outputBruteForce.objectiveValue).max
-
-    if (outputBruteForce.objectiveValue < upperBound) {
+    if (outputBruteForce <= upperBound) {
+    //if (outputBruteForce.objectiveValue < upperBound) {
       val trace1: Vector[Scatter] = Html.scatterRectangles(outputGreedy1, "l1Greedy", AxisReference.X1, AxisReference.Y1)
       val trace2: Vector[Scatter] = Html.scatterRectangles(outputGreedyInf,"linfGreedy",AxisReference.X2,AxisReference.Y2)
       val trace3: Vector[Scatter] = Html.scatterRectangles(outputTilePacking1, "l1TilePacking", AxisReference.X3, AxisReference.Y3)
-      //val trace4: Vector[Scatter] = Html.scatterRectangles(outputTilePackingInf,"linfTilePacking",AxisReference.X4,AxisReference.Y4)
-      val trace5: Vector[Scatter] = Html.scatterRectangles(outputBruteForce, "BruteForce", AxisReference.X4, AxisReference.Y4)
+      val trace4: Vector[Scatter] = Html.scatterRectangles(outputTilePackingInf,"linfTilePacking",AxisReference.X4,AxisReference.Y4)
+      //val trace5: Vector[Scatter] = Html.scatterRectangles(outputBruteForce, "BruteForce", AxisReference.X4, AxisReference.Y4)
 
       // Subplot
-      val subplot: Vector[Scatter] = trace1 ++ trace2 ++ trace3 ++ trace5
+      val subplot: Vector[Scatter] = trace1 ++ trace2 ++ trace3 ++ trace4
       subplot.plot(
         path = "outputFiles/htmlFiles/" + outputGreedy1.uuid + ".html",
         Layout(
@@ -81,7 +82,8 @@ object sensitivityTest extends App {
         outputGreedyInf.objectiveValue.toString,
         outputTilePacking1.objectiveValue.toString,
         outputTilePackingInf.objectiveValue.toString,
-        outputBruteForce.objectiveValue.toString,
+        outputBruteForce.toString,
+        //outputBruteForce.objectiveValue.toString,
         "file:///" + System.getProperty("user.dir") + "/outputFiles/htmlFiles/" + outputGreedy1.uuid + ".html",
         // to be continued
       )
@@ -90,7 +92,7 @@ object sensitivityTest extends App {
   }
 
 
-  val NumberOfAnchors: Int = 6
+  val NumberOfAnchors: Int = 10
   val NumberOfInstances: Int= 20
   val NumberOfPerturbs: Int= 100
   val upperBound: Double = 1
@@ -100,7 +102,7 @@ object sensitivityTest extends App {
 
   for (j <- 0 until NumberOfInstances){
     println(s"Instance number ${j+1}")
-    val inst=Instance.perturbedAntiDiagonal(NumberOfAnchors,epsilon)
+    val inst=Instance.perturbedRandomAntiDiagonal(NumberOfAnchors,epsilon)
     val instances: Vector[Instance] = inst+:(for (_ <- 1 to NumberOfPerturbs) yield inst.perturbed(0.01)).toVector
     val data: Vector[Vector[String]] = instances.map(runAllAlgorithms(_,upperBound)).filterNot(_==Vector()).map(i=>(j+1).toString +: i)
 
@@ -155,7 +157,7 @@ object sensitivityTest extends App {
       }
     }
 
-    val filename = System.getProperty("user.dir") + "/outputFiles/test/"+"sensitivityTestEqAntiDiagPert.xlsx"
+    val filename = System.getProperty("user.dir") + "/outputFiles/test/"+"sensitivityTestRandAntiDiagPert10A.xlsx"
 
     val fileOut = new FileOutputStream(filename)
     workbook.write(fileOut)
