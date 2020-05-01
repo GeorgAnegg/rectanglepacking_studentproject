@@ -4,6 +4,6 @@ import ch.ethz.math.ifor.rectanglePacking.problemInstance.Instance
 
 trait Algorithm {
 
-  def run(instance: Instance): Output
+  //def run(instance: Instance): Output
 
 }

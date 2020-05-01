@@ -2,7 +2,7 @@ package georg
 
 import java.io.FileOutputStream
 
-import ch.ethz.math.ifor.rectanglePacking.algorithms.{Greedy, TilePacking}
+import ch.ethz.math.ifor.rectanglePacking.algorithms.{BruteForce, Greedy, TilePacking}
 import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import ch.ethz.math.ifor.rectanglePacking.inf
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -17,21 +17,19 @@ object CompareAlgosSpreadsheet extends App {
       Greedy.run(instance.normSort(1)).objectiveValue.toString,
       Greedy.run(instance.normSort(inf)).objectiveValue.toString,
       Greedy.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString,
+      Greedy.run(instance.normSort(1, Point.origin)).objectiveValue.toString,
+      Greedy.run(instance.normSort(inf, Point.origin)).objectiveValue.toString,
+      Greedy.run(instance.normSort(inf).reverse).objectiveValue.toString,
       TilePacking.run(instance.normSort(1)).objectiveValue.toString,
       TilePacking.run(instance.normSort(inf)).objectiveValue.toString,
-      TilePacking.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString
-      // opt
+      TilePacking.run(instance.normSort(inf,Point.origin).reverse).objectiveValue.toString,
+      BruteForce.run(instance,withPreprocess = true).objectiveValue.toString
     )
   }
 
-  // manually construct instances
-  // val instance1 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin)))
-  // val instance2 = Instance.standardSquare(List(Anchor.pointToAnchor(Point.origin),Anchor(Vector(0.3,0.8)),Anchor(Vector(0.8,0.3))))
-  // val instances: Vector[Instance] = Vector(instance1,instance2)
-
   // construct random instances
-  val numberOfAnchors = 5
-  val numberOfInstances = 20
+  val numberOfAnchors = 6
+  val numberOfInstances = 10
   val instances: Vector[Instance] = Vector.fill(numberOfInstances)(Instance.createRandomUnitSquareInstance(numberOfAnchors))
 
   // runs all algorithms, prints progress and puts outputs in data object
@@ -50,12 +48,14 @@ object CompareAlgosSpreadsheet extends App {
       "Anchors",
       "l1Greedy",
       "linfGreedy",
-      "l-infGreedy",
+      "linfGreedy_from_origin_reverse",
+      "l1Greedy_from_origin",
+      "linfGreedy_from_origin",
+      "linfGreedy_from_topright_reverse",
       "l1TilePacking",
       "linfTilePacking",
-      "l-infTilePacking"//,
-      /*"opt"
-      */
+      "l-infTilePacking",
+      "bruteforce"
     )
 
     for (i <- columns.indices) {

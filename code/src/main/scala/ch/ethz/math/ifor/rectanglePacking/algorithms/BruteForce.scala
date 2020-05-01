@@ -5,6 +5,31 @@ import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Anchor, Instance, Poi
 
 object BruteForce extends Algorithm {
 
+  def preprocess(instance: Instance): (Instance, Map[Anchor, Rectangle]) = {
+    // get list of points in top right area (that are not dominated by any other anchor
+    val firstLayerAnchors = instance.anchors.filter(anchor => instance.anchors.forall(!anchor.dominatesStrict(_)))
+    val otherAnchors = instance.anchors.filter(!firstLayerAnchors.contains(_))
+    assert(firstLayerAnchors.length + otherAnchors.length == instance.anchors.length)
+    // sort by x-coordinate
+    val firstLayerOrdered = firstLayerAnchors.sortBy(_.coordinates(0))
+
+    // for those anchors, choose max rectangle
+    // this only works for the standard 0,1 box instance
+    var preRectangles: Map[Anchor, Rectangle] = Map()
+    var currentY = instance.topRightBox.coordinates(1)
+    for (i<- firstLayerOrdered.indices) {
+      val currentAnchor = firstLayerOrdered(i)
+      val currentRectangle = Rectangle(currentAnchor, new Point(Vector(1.0, currentY)))
+      currentY = currentAnchor.coordinates(1)
+      preRectangles+= currentAnchor->currentRectangle
+    }
+    val forbiddenRectangles = preRectangles.values.toList
+    val newInst = new Instance(instance.topRightBox, forbiddenRectangles, otherAnchors)
+    (newInst, preRectangles)
+  }
+
+
+
   /** Compute the  optimum for one tree
     *
     * @param instance
@@ -56,11 +81,19 @@ object BruteForce extends Algorithm {
   }
 
 
-  def run(instance:Instance):Output=  {
-    require(instance.forbiddenRectangles.forall(r=>r.contained(instance.topRightBox)),"Forbidden rectangles not in the box")
-    val possibleTops=instance.tops()
-    new Output(instance,runDepth(instance,possibleTops,instance.anchors))
+  def run(instance:Instance, withPreprocess: Boolean = false):Output=  {
+    if (!withPreprocess) //without preprocessing (default behaviour)
+    {
+      require(instance.forbiddenRectangles.forall(r => r.contained(instance.topRightBox)), "Forbidden rectangles not in the box")
+      val possibleTops = instance.tops()
+      new Output(instance, runDepth(instance, possibleTops, instance.anchors))
+    }
+    else {//with preprocessing:
+      val (newInst, preRectangles) = preprocess(instance)
+      val partialOutput = run(newInst)
+      val newOutput = new Output(instance, partialOutput.rectangles ++ preRectangles)
+      newOutput
+    }
   }
 
 }
-//TODO: can we use parts of the implemenation of greedy?
