@@ -8,6 +8,7 @@ import ch.ethz.math.ifor.rectanglePacking.problemInstance.{Instance, Point}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 object CompareAlgorithmsOnRandomInstances {
+  // there is a problem with assembly when this is an actual "def main" - need to check documentation
   def main_method(args: Array[String]): Unit = {
 
     val numberOfAnchors = 4
